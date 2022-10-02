@@ -1,0 +1,3 @@
+# ignore all databse schemas
+*.mwb
+*.mwb.bak
