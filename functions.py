@@ -1,5 +1,6 @@
 import mysql.connector 
 import MySQLdb
+import logging
 
 mydb = mysql.connector.connect(host = '129.154.40.30', user = 'app', passwd = 'password', database = 'mydb')
 cursor = mydb.cursor()
@@ -10,9 +11,21 @@ def create_user(email, name, password):
     try:
         cursor.execute(f"INSERT INTO users (`email`, `user name`, `password`) VALUES ('{email}', '{name}', '{password}')")
         mydb.commit()
+        loging.info(f"Succesfully created user with email: {email}, user name: {name}, password: {password}")
     except mysql.connector.errors.IntegrityError:
-        print("User already exists")
+        logging.warning('User already exists')
     except:
-        print('unknown error')
+        loging.error('Error creating new user')
 
-create_user('sanjeev.selvam@gmail.com', 'sanjeev', 'sanjeev')
+
+def create_group(groupName, *participantIDs):
+    try:
+        cursor.execute(f"INSERT INTO `groups` (`group name`) VALUES ('{groupName}')")
+        id = cursor.lastrowid
+        for x in participantIDs:
+            cursor.execute(f"INSERT INTO `group members` (`users_user id`, `groups_group id`) VALUES ('{x}', {id})")
+        mydb.commit()   
+    except:
+        logging.error("Couldn't create group")
+    
+create_group('newgrp')
