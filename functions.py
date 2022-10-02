@@ -39,4 +39,3 @@ def add_participant_to_group(groupID, participantID, *participantIDs):
     except:
         logging.error("Couldn't create group")
 
-add_participant_to_group(1, 1)
