@@ -2,7 +2,12 @@ import mysql.connector
 import MySQLdb
 import logging
 
-mydb = mysql.connector.connect(host = '129.154.40.30', user = 'app', passwd = 'password', database = 'mydb')
+with open('credentials.txt', 'r') as f:
+    host = f.readline()
+    user = f.readline()
+    passwd = f.readline()
+
+mydb = mysql.connector.connect(host = host, user = user, passwd = passwd, database = 'mydb')
 cursor = mydb.cursor()
 print(mydb)
 
@@ -37,5 +42,5 @@ def add_participant_to_group(groupID, participantID, *participantIDs):
             cursor.execute(f"INSERT INTO `group members` (`users_user id`, `groups_group id`) VALUES ('{x}', '{groupID}');")
         mydb.commit()
     except:
-        logging.error("Couldn't create group")
+        logging.error("Couldn't add participant")
 
