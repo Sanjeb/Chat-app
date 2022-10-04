@@ -1,5 +1,6 @@
 import mysql.connector 
 import MySQLdb
+import logging
 
 with open('credentials.txt', 'r') as f:
     host = f.readline()
