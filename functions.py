@@ -1,15 +1,10 @@
 import mysql.connector 
 import MySQLdb
 import logging
+import main
 
-with open('credentials.txt', 'r') as f:
-    host = f.readline()
-    user = f.readline()
-    passwd = f.readline()
-
-mydb = mysql.connector.connect(host = host, user = user, passwd = passwd, database = 'mydb')
-cursor = mydb.cursor()
-print(mydb)
+mydb = main.mydb
+cursor = main.cursor
 
 def create_user(email, name, password):
     print(email, name, password)
