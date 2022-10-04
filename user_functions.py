@@ -1,8 +1,8 @@
 import logging
-import main
+import connect
 
-mydb = main.mydb
-cursor = main.cursor
+mydb = connect.mydb
+cursor = connect.cursor
 
 def create_user(email, name, password):
     print(email, name, password)
