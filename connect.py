@@ -2,7 +2,7 @@ import mysql.connector
 import MySQLdb
 import logging
 
-with open('credentials.txt', 'r') as f:
+with open('dbconnection.txt', 'r') as f:
     host = f.readline()
     user = f.readline()
     passwd = f.readline()

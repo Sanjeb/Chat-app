@@ -2,3 +2,4 @@
 *.mwb
 *.mwb.bak
 credentials.txt
+dbconnection.txt
