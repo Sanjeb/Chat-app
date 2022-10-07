@@ -4,7 +4,7 @@ import functions_user
 
 #Declaring app variables
 app = customtkinter.CTk()
-app.geometry("10000*10000")
+app.geometry("1600x900")
 app.title("LOGIN")
 
 #On login button press function
