@@ -3,3 +3,4 @@
 *.mwb.bak
 credentials.txt
 dbconnection.txt
+__pycache__/
