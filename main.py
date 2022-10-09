@@ -1,6 +1,7 @@
+import UI_login
 
 def main():
-    print('main')
+    UI_login.main()
 
 if __name__ == '__main__':
     main()
