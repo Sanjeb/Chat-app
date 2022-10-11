@@ -47,9 +47,9 @@ def remove_participant_from_group(groupID, participantID, *participantIDs):
     except:
         logging.error("Couldn't remove participant from group")
 
-def get_messages(groupID):
-    cursor.execute(f"SELECT * FROM `dm messages` WHERE `dm id` = {groupID}")
+def get_dm_messages(dmID):
+    cursor.execute(f"SELECT * FROM `dm messages` WHERE `dm id` = {dmID}")
+    messages = []
     for x in cursor:
-        print(x)
-
-get_messages(1)
+        messages.append(x)
+    return messages

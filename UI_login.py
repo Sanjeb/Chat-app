@@ -6,7 +6,6 @@ import logging
 
 def main():
 
-
     #Declaring app variables
     app = customtkinter.CTk()
     app.geometry("1600x900")
