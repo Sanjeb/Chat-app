@@ -15,3 +15,5 @@ def main():
     chats.grid(column = 1, row = 0, sticky = 'nsew')
     chat_window.grid(column = 2, row = 0, sticky = 'nsew')
     profile.grid(column = 3, row = 0, sticky = 'nsew')
+
+    

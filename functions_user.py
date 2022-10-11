@@ -5,7 +5,6 @@ mydb = connect.mydb
 cursor = connect.cursor
 
 def create_user(email, name, password):
-    print(email, name, password)
     try:
         cursor.execute(f"INSERT INTO users (`email`, `user name`, `password`) VALUES ('{email}', '{name}', '{password}')")
         mydb.commit()
