@@ -53,3 +53,13 @@ def get_dm_messages(dmID):
     for x in cursor:
         messages.append(x)
     return messages
+
+def get_dm_users(userID):
+    cursor.execute(f"SELECT * FROM `dm members` WHERE `user id` = {userID}")
+    ids = []
+    dms = cursor.fetchall()
+    for x in dms:
+        cursor.execute(f"SELECT * FROM `dm members` WHERE `dm id` = {x[1]} and `user id` != {userID}")
+        dm_ids = cursor.fetchall()
+        ids.append(dm_ids[0])
+    return ids
