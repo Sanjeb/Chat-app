@@ -63,3 +63,4 @@ def get_dm_users(userID):
         dm_ids = cursor.fetchall()
         ids.append(dm_ids[0])
     return ids
+    
