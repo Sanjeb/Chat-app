@@ -4,6 +4,10 @@ import connect
 mydb = connect.mydb
 cursor = connect.cursor
 
+with open('credentials.txt', 'r') as f:
+    CurrentUserID, email, password = f.read().split()
+
+
 def create_group(groupName, ownerID, participant1, participant2, *participantIDs):
     try:
         cursor.execute(f"INSERT INTO `groups` (`group name`) VALUES ('{groupName}')")
@@ -52,15 +56,25 @@ def get_dm_messages(dmID):
     messages = []
     for x in cursor:
         messages.append(x)
-    return messages
+    return messages #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID), (MessageID, MessageText, SenderUserID, DMID)]
 
-def get_dm_users(userID):
-    cursor.execute(f"SELECT * FROM `dm members` WHERE `user id` = {userID}")
+def get_latest_dm_messages(dmID, lastMessageID):
+    cursor.execute(f"SELECT * FROM `dm messages` WHERE `dm id` = {dmID} AND `message id` > {lastMessageID}")
+    messages = []
+    for x in cursor:
+        messages.append(x)
+    return messages #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID), (MessageID, MessageText, SenderUserID, DMID)]
+
+def get_dm_users():
+    cursor.execute(f"SELECT * FROM `dm members` WHERE `user id` = {CurrentUserID}")
     ids = []
     dms = cursor.fetchall()
     for x in dms:
-        cursor.execute(f"SELECT * FROM `dm members` WHERE `dm id` = {x[1]} and `user id` != {userID}")
+        cursor.execute(f"SELECT * FROM `dm members` WHERE `dm id` = {x[1]} and `user id` != {CurrentUserID}")
         dm_ids = cursor.fetchall()
         ids.append(dm_ids[0])
-    return ids
-    
+    return ids #Returns list in the format [(UserID, DMID), (UserID, DMID)]
+ 
+def send_dm_messages(dmID, message):
+    cursor.execute(f"INSERT INTO `dm messages` (`message text`, `sender user id`, `dm id`) VALUES ('{message}', '{CurrentUserID}', '{dmID}');")
+    mydb.commit()

@@ -13,6 +13,8 @@ def main():
   
     #Checks if user has already logged in and authenticates with database
     def credentials():
+        global id
+        global email
         try:
             with open('credentials.txt', 'r') as f:
                 id, email, password = f.read().split()
