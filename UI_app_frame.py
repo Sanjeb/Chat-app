@@ -6,7 +6,7 @@ import functions_chat
 import threading
 
 app = customtkinter.CTk()
-
+lastMessageID = 0
 def chat():
     global app
 
@@ -16,10 +16,10 @@ def chat():
     app.columnconfigure(3, minsize = 300) #Column for selected chat profile info
 
     switcher = customtkinter.CTkFrame(master=app, width=75) #Frame for Switcher between chat and DMs
-    chats = customtkinter.CTkFrame(master=app) #All Chats
+    chats = customtkinter.CTkFrame(master=app, width=100) #All Chats
     chat_window = customtkinter.CTkFrame(master=app) #Frame for viewing messages
     profile = customtkinter.CTkFrame(master=app, fg_color='red') #Frame for Profile
-
+    
     #Configures grid for all the frames in window
     switcher.grid(column = 0, row = 0 , sticky = 'nsew')
     chats.grid(column = 1, row = 0, sticky = 'nsew')
@@ -34,14 +34,14 @@ def chat():
     def message_viewer(id):
         entry = customtkinter.CTkEntry(master=chat_window)
         messages_canvas = tkinter.Canvas(master=chat_window, borderwidth=0, highlightthickness=0, background="#343638")
-        messages = customtkinter.CTkFrame(master=messages_canvas)
+        messages = customtkinter.CTkFrame(master=messages_canvas, fg_color="#343638")
         messages_scrollbar = customtkinter.CTkScrollbar(master=chat_window, command=messages_canvas.yview)
         messages_canvas.configure(yscrollcommand=messages_scrollbar.set)
         
         entry.grid(row = 2, padx = 10, pady = 10, sticky = 'ew')
         messages_canvas.grid(row = 1, column= 0, sticky='nsew')
         messages_scrollbar.grid(row = 1, column = 1, sticky = 'nse')
-        messages_canvas.create_window((0,0), window=messages, width=800, anchor="nw")
+        messages_canvas.create_window((0,0), window=messages, width=0, anchor="nw")
 
         def onFrameConfigure(messages_canvas):
             '''Reset the scroll region to encompass the inner frame'''
@@ -49,40 +49,52 @@ def chat():
 
         messages.bind("<Configure>", lambda event, messages_canvas=messages_canvas: onFrameConfigure(messages_canvas))
 
-
         chat_window.rowconfigure(0, minsize = 75)
         chat_window.rowconfigure(1, weight = 1)
         chat_window.columnconfigure(0, weight = 1)
-        messages.columnconfigure(0, weight = 1)
 
-        m = functions_chat.get_dm_messages(id) #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID), (MessageID, MessageText, SenderUserID, DMID)]
+        m = functions_chat.get_dm_messages(id) #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID, SenderUsername), (MessageID, MessageText, SenderUserID, DMID, SenderUsername)]
         global lastMessageID
-
+        
         def enter(event):
             event.widget.configure(fg_color='yellow')
         def leave(event):
             event.widget.configure(fg_color='#343638')
         for x in m:
-            m_frame = customtkinter.CTkFrame(master=messages)
-            message_label = customtkinter.CTkLabel(master=m_frame, text=x[1], anchor='w')
-            message_label.pack()
-            m_frame.grid(column=0, sticky = 'ew')
+            m_frame = customtkinter.CTkFrame(master=messages, fg_color="#343638", pady = 10, padx = 5)
+            user_label = customtkinter.CTkLabel(master=m_frame, text=x[5], anchor='w', justify='left', text_font=('uni sans', 15, 'bold'), width=0)
+            timestamp_label = customtkinter.CTkLabel(master=m_frame, text=x[4], anchor='w', justify='left', text_font=('uni sans', 8))
+            message_label = customtkinter.CTkLabel(master=m_frame, text=x[1], anchor='w', justify='left', text_font=('calibri', 12), wraplength=800)
+            m_frame.columnconfigure(1, weight = 1)
+            user_label.grid(column=0, row = 0, sticky = 'w')
+            timestamp_label.grid(column = 1, row = 0, sticky = 'w', padx = 5)
+            message_label.grid(column = 0, row = 1, sticky = 'w', columnspan = 2)
+            m_frame.grid(column=0, sticky = 'w')
             m_frame.bind('<Enter>', enter)
             m_frame.bind('<Leave>', leave)
             lastMessageID = x[0]
-
+        messages_canvas.update_idletasks()
+        messages_canvas.yview_moveto(1.0)
+        
         def update():
             global DisplayedUserID
             global lastMessageID
             m = functions_chat.get_latest_dm_messages(DisplayedUserID, lastMessageID)
             for x in m:
-                m_frame = customtkinter.CTkFrame(master=messages)
-                message_label = customtkinter.CTkLabel(master=m_frame, text=x[1], anchor='w')
-                message_label.pack()
-                m_frame.grid(column=0, sticky = 'ew')
+                m_frame = customtkinter.CTkFrame(master=messages, fg_color="#343638", pady = 10, padx = 5)
+                user_label = customtkinter.CTkLabel(master=m_frame, text=x[5], anchor='w', justify='left', text_font=('uni sans', 15, 'bold'), width=0)
+                timestamp_label = customtkinter.CTkLabel(master=m_frame, text=x[4], anchor='w', justify='left', text_font=('uni sans', 8))
+                message_label = customtkinter.CTkLabel(master=m_frame, text=x[1], anchor='w', justify='left', text_font=('calibri', 12), wraplength=800)
+                m_frame.columnconfigure(1, weight = 1)
+                user_label.grid(column=0, row = 0, sticky = 'w')
+                timestamp_label.grid(column = 1, row = 0, sticky = 'w', padx = 5)
+                message_label.grid(column = 0, row = 1, sticky = 'w', columnspan = 2)
+                m_frame.grid(column=0, sticky = 'w')
                 m_frame.bind('<Enter>', enter)
                 m_frame.bind('<Leave>', leave)
                 lastMessageID = x[0]
+            messages_canvas.update_idletasks()
+            messages_canvas.yview_moveto(1.0)
 
 
         def send(event):
@@ -98,11 +110,9 @@ def chat():
                         finalMessage += "'" + x
                 functions_chat.send_dm_messages(DisplayedUserID, finalMessage)
                 update()
-            
-            
-        
-        entry.bind('<Return>', send)
 
+        entry.bind('<Return>', send)
+        
     # Chats
     def chats_viewer():
         
@@ -144,6 +154,7 @@ def chat():
                 chats_profiles.canvas.bind("<Button-1>", lambda event, id = x[1]: click(event, id))
                 message_label.canvas.bind("<Button-1>", lambda event, id = x[1]: click(event, id))
                 m_frame.grid(column = 0)
+            
         func()
 
     chats_viewer()
@@ -161,4 +172,4 @@ def main():
 
     app.mainloop()
 
-main()
+#main()

@@ -4,8 +4,10 @@ import connect
 mydb = connect.mydb
 cursor = connect.cursor
 
-with open('credentials.txt', 'r') as f:
-    CurrentUserID, email, password = f.read().split()
+def getUserData():
+    global CurrentUserID, email, password
+    with open('credentials.txt', 'r') as f:
+        CurrentUserID, email, password = f.read().split()
 
 
 def create_group(groupName, ownerID, participant1, participant2, *participantIDs):
@@ -52,20 +54,21 @@ def remove_participant_from_group(groupID, participantID, *participantIDs):
         logging.error("Couldn't remove participant from group")
 
 def get_dm_messages(dmID):
-    cursor.execute(f"SELECT * FROM `dm messages` WHERE `dm id` = {dmID}")
+    cursor.execute(f"SELECT `dm messages`.*, users.`user name` FROM `dm messages`, users  WHERE `dm id` = {dmID} AND `sender user id` = users.`user id` ORDER BY `time sent`;")
     messages = []
     for x in cursor:
         messages.append(x)
-    return messages #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID), (MessageID, MessageText, SenderUserID, DMID)]
+    return messages #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID, SenderUsername), (MessageID, MessageText, SenderUserID, DMID, SenderUsername)]
 
 def get_latest_dm_messages(dmID, lastMessageID):
-    cursor.execute(f"SELECT * FROM `dm messages` WHERE `dm id` = {dmID} AND `message id` > {lastMessageID}")
+    cursor.execute(f"SELECT `dm messages`.*, users.`user name` FROM `dm messages`, users WHERE `message id` > {lastMessageID} AND `dm id` = {dmID} AND `sender user id` = users.`user id` ORDER BY `time sent`;")
     messages = []
     for x in cursor:
         messages.append(x)
-    return messages #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID), (MessageID, MessageText, SenderUserID, DMID)]
+    return messages #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID, SenderUsername), (MessageID, MessageText, SenderUserID, DMID, SenderUsername)]
 
 def get_dm_users():
+    getUserData()
     cursor.execute(f"SELECT * FROM `dm members` WHERE `user id` = {CurrentUserID}")
     ids = []
     dms = cursor.fetchall()
@@ -76,5 +79,6 @@ def get_dm_users():
     return ids #Returns list in the format [(UserID, DMID), (UserID, DMID)]
  
 def send_dm_messages(dmID, message):
+    getUserData()
     cursor.execute(f"INSERT INTO `dm messages` (`message text`, `sender user id`, `dm id`) VALUES ('{message}', '{CurrentUserID}', '{dmID}');")
     mydb.commit()

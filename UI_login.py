@@ -48,7 +48,7 @@ def main():
 
     #Text labels
     labelWelcome = customtkinter.CTkLabel(master=app, text="Welcome back", text_font=('comic sans', 30))
-    labelSignIn = customtkinter.CTkLabel(master=app, text="Sign In to start using chat", text_font=('comic sans', 20))
+    labelSignIn = customtkinter.CTkLabel(master=app, text="Sign In to start using DISCARD", text_font=('comic sans', 20))
     labelEmail = customtkinter.CTkLabel(master=app, text="E-mail:\t\t\t", text_font=('comic sans', 10))
     labelPassword = customtkinter.CTkLabel(master=app, text="Password:\t\t", text_font=('comic sans', 10))
     labelIncorrect = customtkinter.CTkLabel(master=app, text="", text_font=('comic sans', 10), text_color='red')
