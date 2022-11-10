@@ -1,14 +1,20 @@
 import tkinter
 import customtkinter
 import logging
-import time
 import functions_chat
+import connect
 import threading
+import time
+
+mydb = connect.mydb
+cursor = mydb.cursor(buffered=True)
 
 app = customtkinter.CTk()
 lastMessageID = 0
 def chat():
     global app
+    global DisplayedUserID
+    global lastMessageID
 
     app.columnconfigure(0, minsize = 75) #Column for sidebar/switcher between groups and DMs
     app.columnconfigure(1, minsize = 300) #Column for viewing chats
@@ -113,6 +119,23 @@ def chat():
 
         entry.bind('<Return>', send)
         
+        def get_new_messages():
+            print("start")
+            global DisplayedUserID
+            global lastMessageID
+            global mydb
+            global cursor
+            while True:
+                time.sleep(5)
+                cursor.execute(f"SELECT * FROM `dm messages` WHERE `dm id` = {DisplayedUserID} AND `message id` > {lastMessageID}")
+                mydb.commit()
+                recs = cursor.fetchall()
+                if recs != []:
+                    update()
+        
+        t1 = threading.Thread(target=get_new_messages)
+        t1.start()
+
     # Chats
     def chats_viewer():
         
@@ -172,4 +195,4 @@ def main():
 
     app.mainloop()
 
-#main()
+main()

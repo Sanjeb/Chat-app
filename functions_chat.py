@@ -4,10 +4,9 @@ import connect
 mydb = connect.mydb
 cursor = connect.cursor
 
-def getUserData():
-    global CurrentUserID, email, password
-    with open('credentials.txt', 'r') as f:
-        CurrentUserID, email, password = f.read().split()
+
+with open('credentials.txt', 'r') as f:
+    CurrentUserID, email, password = f.read().split()
 
 
 def create_group(groupName, ownerID, participant1, participant2, *participantIDs):
@@ -68,7 +67,6 @@ def get_latest_dm_messages(dmID, lastMessageID):
     return messages #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID, SenderUsername), (MessageID, MessageText, SenderUserID, DMID, SenderUsername)]
 
 def get_dm_users():
-    getUserData()
     cursor.execute(f"SELECT * FROM `dm members` WHERE `user id` = {CurrentUserID}")
     ids = []
     dms = cursor.fetchall()
@@ -79,6 +77,5 @@ def get_dm_users():
     return ids #Returns list in the format [(UserID, DMID), (UserID, DMID)]
  
 def send_dm_messages(dmID, message):
-    getUserData()
     cursor.execute(f"INSERT INTO `dm messages` (`message text`, `sender user id`, `dm id`) VALUES ('{message}', '{CurrentUserID}', '{dmID}');")
     mydb.commit()
