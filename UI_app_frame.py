@@ -12,7 +12,6 @@ cursor = mydb.cursor(buffered=True)
 app = customtkinter.CTk()
 lastMessageID = 0
 def chat():
-    global app
     global DisplayedUserID
     global lastMessageID
 
@@ -62,22 +61,16 @@ def chat():
         m = functions_chat.get_dm_messages(id) #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID, SenderUsername), (MessageID, MessageText, SenderUserID, DMID, SenderUsername)]
         global lastMessageID
         
-        def enter(event):
-            event.widget.configure(fg_color='yellow')
-        def leave(event):
-            event.widget.configure(fg_color='#343638')
         for x in m:
             m_frame = customtkinter.CTkFrame(master=messages, fg_color="#343638", pady = 10, padx = 5)
             user_label = customtkinter.CTkLabel(master=m_frame, text=x[5], anchor='w', justify='left', text_font=('uni sans', 15, 'bold'), width=0)
-            timestamp_label = customtkinter.CTkLabel(master=m_frame, text=x[4], anchor='w', justify='left', text_font=('uni sans', 8))
+            timestamp_label = customtkinter.CTkLabel(master=m_frame, text=x[4], anchor='w', justify='left', text_font=('uni sans', 8), text_color='grey')
             message_label = customtkinter.CTkLabel(master=m_frame, text=x[1], anchor='w', justify='left', text_font=('calibri', 12), wraplength=800)
             m_frame.columnconfigure(1, weight = 1)
             user_label.grid(column=0, row = 0, sticky = 'w')
             timestamp_label.grid(column = 1, row = 0, sticky = 'w', padx = 5)
             message_label.grid(column = 0, row = 1, sticky = 'w', columnspan = 2)
             m_frame.grid(column=0, sticky = 'w')
-            m_frame.bind('<Enter>', enter)
-            m_frame.bind('<Leave>', leave)
             lastMessageID = x[0]
         messages_canvas.update_idletasks()
         messages_canvas.yview_moveto(1.0)
@@ -89,15 +82,13 @@ def chat():
             for x in m:
                 m_frame = customtkinter.CTkFrame(master=messages, fg_color="#343638", pady = 10, padx = 5)
                 user_label = customtkinter.CTkLabel(master=m_frame, text=x[5], anchor='w', justify='left', text_font=('uni sans', 15, 'bold'), width=0)
-                timestamp_label = customtkinter.CTkLabel(master=m_frame, text=x[4], anchor='w', justify='left', text_font=('uni sans', 8))
+                timestamp_label = customtkinter.CTkLabel(master=m_frame, text=x[4], anchor='w', justify='left', text_font=('uni sans', 8), text_color='grey')
                 message_label = customtkinter.CTkLabel(master=m_frame, text=x[1], anchor='w', justify='left', text_font=('calibri', 12), wraplength=800)
                 m_frame.columnconfigure(1, weight = 1)
                 user_label.grid(column=0, row = 0, sticky = 'w')
                 timestamp_label.grid(column = 1, row = 0, sticky = 'w', padx = 5)
                 message_label.grid(column = 0, row = 1, sticky = 'w', columnspan = 2)
                 m_frame.grid(column=0, sticky = 'w')
-                m_frame.bind('<Enter>', enter)
-                m_frame.bind('<Leave>', leave)
                 lastMessageID = x[0]
             messages_canvas.update_idletasks()
             messages_canvas.yview_moveto(1.0)
@@ -120,13 +111,10 @@ def chat():
         entry.bind('<Return>', send)
         
         def get_new_messages():
-            print("start")
             global DisplayedUserID
             global lastMessageID
-            global mydb
-            global cursor
             while True:
-                time.sleep(5)
+                time.sleep(2)
                 cursor.execute(f"SELECT * FROM `dm messages` WHERE `dm id` = {DisplayedUserID} AND `message id` > {lastMessageID}")
                 mydb.commit()
                 recs = cursor.fetchall()
@@ -182,15 +170,44 @@ def chat():
 
     chats_viewer()
 
+def mode():
+    app.rowconfigure(0, weight = 1)
+    app.rowconfigure(1, minsize = 10)
+    modeSelecter = customtkinter.CTkFrame(master=app)
+    modeSelecter.columnconfigure(0, weight = 1)
+    modeSelecter.columnconfigure(1, weight = 1)
+    modeSelecter.grid_propagate()
+    modeSelecter.grid(row = 1, columnspan = 4, sticky = 'ew')
+
+    chatMode = customtkinter.CTkFrame(master=modeSelecter, height=75)
+    friendsMode = customtkinter.CTkFrame(master=modeSelecter, height=75)
+
+    def enter(event):
+        event.widget.configure(fg_color='yellow')
+    def leave(event):
+        event.widget.configure(fg_color='#343638')
+    def click(event, id):
+        for widget in app.winfo_children():
+            widget.destroy()
+    
+    chatMode.bind('<Enter>', enter)
+    chatMode.bind('<Leave>', leave)
+    chatMode.bind("<Button-1>", lambda event, id = 0: click(event, id))
+
+    friendsMode.bind('<Enter>', enter)
+    friendsMode.bind('<Leave>', leave)
+    friendsMode.bind("<Button-1>", lambda event, id = 1: click(event, id))
+
+    chatMode.grid(column = 0, row = 0, sticky = 'nsew')
+    friendsMode.grid(column = 1, row = 0, sticky = 'nsew')
+
 def main():
     global app
     app.geometry("1600x900")
     app.title("CHAT")
     app.resizable(False, False)
-
-    app.rowconfigure(0, weight = 1)
-    app.rowconfigure(1, minsize = 75)
     
+    mode()
     chat()
 
     app.mainloop()
