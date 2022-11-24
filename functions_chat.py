@@ -71,10 +71,10 @@ def get_dm_users():
     ids = []
     dms = cursor.fetchall()
     for x in dms:
-        cursor.execute(f"SELECT * FROM `dm members` WHERE `dm id` = {x[1]} and `user id` != {CurrentUserID}")
+        cursor.execute(f" SELECT `dm members`.*, users.`user name` FROM `dm members`, users WHERE `dm members`.`dm id` = {x[1]} and `dm members`.`user id` != {CurrentUserID} AND `dm members`.`user id` = `users`.`user id`;")
         dm_ids = cursor.fetchall()
         ids.append(dm_ids[0])
-    return ids #Returns list in the format [(UserID, DMID), (UserID, DMID)]
+    return ids #Returns list in the format [(UserID, DMID, UserName), (UserID, DMID, UserName)]
  
 def send_dm_messages(dmID, message):
     cursor.execute(f"INSERT INTO `dm messages` (`message text`, `sender user id`, `dm id`) VALUES ('{message}', '{CurrentUserID}', '{dmID}');")

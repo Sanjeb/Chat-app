@@ -145,7 +145,7 @@ def chat():
         chats.rowconfigure(0, weight = 1)
 
         def func():
-            m = functions_chat.get_dm_users() #Returns list in the format [(UserID, DMID), (UserID, DMID)]
+            m = functions_chat.get_dm_users() #Returns list in the format [(UserID, DMID, UserName), (UserID, DMID, UserName)]
             def enter(event):
                 event.widget.configure(fg_color='yellow')
             def leave(event):
@@ -158,7 +158,7 @@ def chat():
                 message_viewer(id)
             for x in m:
                 m_frame = customtkinter.CTkFrame(master=chats_profiles)
-                message_label = customtkinter.CTkLabel(master=m_frame, text=x[0], anchor='w')
+                message_label = customtkinter.CTkLabel(master=m_frame, text=x[2], anchor='w')
                 message_label.pack()
                 m_frame.bind('<Enter>', enter)
                 m_frame.bind('<Leave>', leave)
