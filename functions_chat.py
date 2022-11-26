@@ -71,7 +71,7 @@ def get_dm_users():
     ids = []
     dms = cursor.fetchall()
     for x in dms:
-        cursor.execute(f" SELECT `dm members`.*, users.`user name` FROM `dm members`, users WHERE `dm members`.`dm id` = {x[1]} and `dm members`.`user id` != {CurrentUserID} AND `dm members`.`user id` = `users`.`user id`;")
+        cursor.execute(f" SELECT `dm members`.*, users.`user name`, users.picture FROM `dm members`, users WHERE `dm members`.`dm id` = {x[1]} and `dm members`.`user id` != {CurrentUserID} AND `dm members`.`user id` = `users`.`user id`;")
         dm_ids = cursor.fetchall()
         ids.append(dm_ids[0])
     return ids #Returns list in the format [(UserID, DMID, UserName), (UserID, DMID, UserName)]
@@ -79,3 +79,15 @@ def get_dm_users():
 def send_dm_messages(dmID, message):
     cursor.execute(f"INSERT INTO `dm messages` (`message text`, `sender user id`, `dm id`) VALUES ('{message}', '{CurrentUserID}', '{dmID}');")
     mydb.commit()
+
+def get_user(email):
+    cursor.execute(f" SELECT * FROM users WHERE email = '{email}'")
+    info = cursor.fetchone()
+    if info == None:
+        return info
+    user = []
+    for index in range(len(info) - 1):
+        user.append(info[index])
+    with open('ProfilePictures/' + str(info[0]) + '.png', 'wb') as file:
+        file.write(info[5])
+    return user

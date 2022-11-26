@@ -1,19 +1,25 @@
 import logging
 import connect
+import mysql.connector
 
 mydb = connect.mydb
 cursor = connect.cursor
 
-def create_user(email, name, password):
-    try:
-        cursor.execute(f"INSERT INTO users (`email`, `user name`, `password`) VALUES ('{email}', '{name}', '{password}')")
-        mydb.commit()
-        loging.info(f"Succesfully created user with email: {email}, user name: {name}, password: {password}")
-        logging.info(f"new user created with email {email} and name {name}")
+def create_user(email, name, password, picture):
+    
+    command = "INSERT INTO users (`email`, `user name`, `password`, `picture`) VALUES (%s, %s, %s, %s)"
+    values = (email, name, password, picture)
+    print(command, values)
+    cursor.execute(command, values)
+    mydb.commit()
+    logging.info(f"Succesfully created user with email: {email}, user name: {name}, password: {password}")
+    logging.info(f"new user created with email {email} and name {name}")
+    '''
     except mysql.connector.errors.IntegrityError:
         logging.warning('User already exists')
     except:
-        loging.error("Error creating new user")
+        logging.error("Error creating new user")
+    '''
 
 def login(email, password):
     try:

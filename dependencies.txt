@@ -1,0 +1,6 @@
+customtkinter
+tkinter
+mysql.connector
+MySQLdb
+PIL
+logging
