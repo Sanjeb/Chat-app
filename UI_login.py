@@ -21,8 +21,6 @@ def main():
             if ret == 0:
                 app.destroy()
                 import UI_app_frame
-                import update
-                update.t1.start()
                 UI_app_frame.main()
                 logging.info("Succesfully authenticated")
         except:
@@ -37,10 +35,7 @@ def main():
             labelIncorrect.configure(text="")
             app.destroy()
             import UI_app_frame
-            import update
-            update.t1.start()
             UI_app_frame.main()
-            update.main()
         elif ret == 1:
             labelIncorrect.configure(text="Incorrect email or password. Please try again")
         else:

@@ -17,7 +17,7 @@ def create_group(groupName, ownerID, participant1, participant2, *participantIDs
         cursor.execute(f"INSERT INTO `group members` (`users_user id`, `groups_group id`) VALUES ('{participant2}', {id})")
         for x in participantIDs:
             cursor.execute(f"INSERT INTO `group members` (`users_user id`, `groups_group id`) VALUES ('{x}', {id})")
-        mydb.commit()   
+        mydb.commit()
         logging.info(f"Created new group {groupName}")
     except:
         logging.error("Couldn't create group")
@@ -89,5 +89,33 @@ def get_user(email):
     for index in range(len(info) - 1):
         user.append(info[index])
     with open('ProfilePictures/' + str(info[0]) + '.png', 'wb') as file:
-        file.write(info[5])
+        file.write(info[4])
     return user
+
+def new_dm(userID):
+    cursor.execute("INSERT INTO `dm id`(`dm id`) VALUES(NULL)")
+    dmID = cursor.lastrowid
+    mydb.commit()
+    cursor.execute(f"INSERT INTO `dm members`(`user id`, `dm id`) VALUES({CurrentUserID}, {dmID})")
+    cursor.execute(f"INSERT INTO `dm members`(`user id`, `dm id`) VALUES({userID}, {dmID})")
+    mydb.commit()
+
+def get_bio(userID):
+    cursor.execute(f"SELECT * FROM bio WHERE `user id` = {userID}")
+    bio = cursor.fetchone()
+    return bio
+
+def profile_update(email, username, password):
+    cursor.execute(f"UPDATE `users` SET `email` = '{email}', `user name` = '{username}', `password` = '{password}' WHERE `user id` = {CurrentUserID}")
+    mydb.commit()
+    cursor.execute(f"SELECT * FROM `users` WHERE `user id` = {CurrentUserID}")
+    credentials = cursor.fetchone()
+    with open('credentials.txt', 'w') as f:
+            credentialsString = str(credentials[0]) + '\n' + credentials[1] + '\n' + credentials[3]
+            f.write(credentialsString)
+    read_credentials()
+
+def read_credentials():
+    global CurrentUserID, email, password
+    with open('credentials.txt', 'r') as f:
+        CurrentUserID, email, password = f.read().split()
