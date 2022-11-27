@@ -25,15 +25,19 @@ def create_user(email, name, password, picture):
     '''
 
 def login(email, password):
-    try:
-        cursor.execute(f"SELECT * FROM mydb.users WHERE email='{email}' AND password='{password}';")
-        id = cursor.fetchall()[0][0]
-        with open('credentials.txt', 'w') as f:
-            credentials = str(id) + '\n' + email + '\n' + password
-            f.write(credentials)
-        logging.info(f"Succesfully logged in with email {email}")
-        return 0
+    #try:
+    cursor.execute(f"SELECT * FROM mydb.users WHERE email='{email}' AND password='{password}';")
+    id = cursor.fetchall()[0][0]
+    with open('credentials.txt', 'w') as f:
+        credentials = str(id) + '\n' + email + '\n' + password
+        f.write(credentials)
+    logging.info(f"Succesfully logged in with email {email}")
+    import functions_chat
+    functions_chat.get_user(email)
+    return 0
+    '''
     except IndexError:
         return 1
     except:
         return 2
+    '''

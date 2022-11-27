@@ -26,8 +26,6 @@ def main():
         except:
             pass
 
-    credentials()
-
     #On login button press function
     def on_press():
         ret = functions_user.login(entryEmail.get(), entryPassword.get())
@@ -69,4 +67,5 @@ def main():
     buttonLogin.grid(row=7, column=1, sticky='w')
     labelIncorrect.grid(row=8, column=1, sticky='w')
 
+    credentials()
     app.mainloop()
