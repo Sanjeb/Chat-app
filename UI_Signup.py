@@ -14,16 +14,6 @@ bob.configure(fg_color='#1e1c1c')
 
 
 def main():
-    # bg
-    
-    #background = Image.open(r"C:\Users\Sanje\Downloads\background.jpg")
-    #bg_resize = background.resize((1000, 500))
-    #bg1 = ImageTk.PhotoImage(bg_resize)
-
-    '''
-    bg = CTkButton(bob, image=bg1, text='', state='disabled')
-    bg.pack()
-    '''
 
     signupframe = CTkFrame(bob, width=400, height=450, corner_radius=15, fg_color='black')  # bg='#292929'
     signupframe.place(x=490, y=25)
@@ -71,7 +61,7 @@ def main():
     # password
     password = CTkLabel(signupframe, text='Password', width=20)
     password.place(x=20, y=195)
-    passwordentry = CTkEntry(signupframe, width=350, border_width=2, placeholder_text='Enter Password', placeholder_text_color='silver')
+    passwordentry = CTkEntry(signupframe, width=350, border_width=2, placeholder_text='Enter Password', placeholder_text_color='silver', show = '\u2022')
     passwordentry.place(x=20, y=225)
 
     #Fill all fields

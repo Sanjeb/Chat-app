@@ -1,8 +1,13 @@
 # ignore all databse schemas
 *.mwb
 *.mwb.bak
+
+#Files
 credentials.txt
 dbconnection.txt
-__pycache__/
 testing.py
 discard_final7.py
+
+#Files
+__pycache__/
+ProfilePictures
