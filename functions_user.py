@@ -6,23 +6,22 @@ mydb = connect.mydb
 cursor = connect.cursor
 
 def create_user(email, name, password, picture):
-    
-    command = "INSERT INTO users (`email`, `user name`, `password`, `picture`) VALUES (%s, %s, %s, %s)"
-    values = (email, name, password, picture)
-    print(command, values)
-    cursor.execute(command, values)
-    userID = cursor.lastrowid
-    print(userID)
-    cursor.execute(f"INSERT INTO bio (`user id`) VALUES({userID})")
-    mydb.commit()
-    logging.info(f"Succesfully created user with email: {email}, user name: {name}, password: {password}")
-    logging.info(f"new user created with email {email} and name {name}")
-    '''
+    try:
+        command = "INSERT INTO users (`email`, `user name`, `password`, `picture`) VALUES (%s, %s, %s, %s)"
+        values = (email, name, password, picture)
+        cursor.execute(command, values)
+        userID = cursor.lastrowid
+        print(userID)
+        cursor.execute(f"INSERT INTO bio (`user id`) VALUES({userID})")
+        mydb.commit()
+        logging.info(f"Succesfully created user with email: {email}, user name: {name}, password: {password}")
+        logging.info(f"new user created with email {email} and name {name}")
+        return True
     except mysql.connector.errors.IntegrityError:
         logging.warning('User already exists')
+        return False
     except:
         logging.error("Error creating new user")
-    '''
 
 def login(email, password):
     try:

@@ -12,7 +12,12 @@ import os
 mydb = connect.mydb
 cursor = mydb.cursor(buffered=True)
 
+
 app = customtkinter.CTk()
+app.geometry("1600x900")
+app.title("DISCARD")
+app.resizable(False, False)
+
 lastMessageID = 0
 def chat():
     global DisplayedUserID
@@ -109,21 +114,13 @@ def chat():
         profpic.image = profilePicture
         profpic.place(x=100, y=60)
 
-        '''
-        def status_box(win, status):
-            L = [('Available', 'green'), ('Away', 'yellow'), ('Busy', 'orange'),
-                ('Invisible', 'gray'), ('Do Not Disturb', 'red')]
-            for i in L:
-                if status == i[0]:
-                    color = i[1]
-            st = customtkinter.CTkButton(win, fg_color=color, text='', width=15, height=15, border_width=0)
-            st.place(x=150, y=120)
-            ToolTip(st, msg=status)
-        '''
+        def unfriend(id):
+            functions_chat.unfriend(id)
+            chat()
 
         username.place(x=0, y=180)
 
-        unfr = customtkinter.CTkButton(profile, text="This button isn't working yet", width=220, corner_radius=20, fg_color='#292929', border_width=2, border_color='teal', hover_color='teal')
+        unfr = customtkinter.CTkButton(profile, text="UNFRIEND", width=220, corner_radius=20, fg_color='#292929', border_width=2, border_color='teal', hover_color='teal', command= lambda: unfriend(id))
         unfr.place(x=40, y=210)
 
         abt = customtkinter.CTkFrame(profile, fg_color='#292929', width=280, height=100)
@@ -133,44 +130,6 @@ def chat():
 
         desc = customtkinter.CTkLabel(abt, text="About me isn't working yet", fg_color='#292929', corner_radius=10, width=240, height=75, anchor='nw')
         desc.place(x=0, y=35)
-        
-        #arrow = Image.open(r'C:\Users\Sanje\Downloads\arrow.png')
-        #arrow_resize = arrow.resize((20, 20))
-        #arrow1 = ImageTk.PhotoImage(arrow_resize)
-        '''
-        ot = customtkinter.CTkButton(other, width=225, height=30, image=arrow1, text='Follow me on                           ', text_font=('Garamond', 13), compound='right', fg_color='#292929')
-        ot.place(x=0, y=5)
-        
-        
-        def common(win):
-            cmn = customtkinter.CTkFrame(win, fg_color='#292929', width=250, height=55)
-            cmn.place(x=0, y=325)
-            cmnfr = customtkinter.CTkLabel(cmn, text='Friends in Common', text_font=('Garamond', 12), width=20, height=10)
-            cmnfr.place(x=10, y=5)
-
-            friends = customtkinter.CTkLabel(cmn, text='Smarana, Raghav', fg_color='#292929', corner_radius=10, width=40, height=20, anchor='nw')
-            friends.place(x=0, y=30)
-
-            def others(x):
-                nonlocal cmn
-                others = Button(cmn, text=f'. . .+{x} more', bd=0, bg='#292929', fg='white', activebackground='#292929', activeforeground='sky blue')
-                others. place(x=125, y=28)
-
-            others(3)
-        '''
-
-        #bl = Image.open(r'C:\Users\Sanje\Downloads\block.png')
-        #bl_resize = bl.resize((20, 20))
-        #bl1 = ImageTk.PhotoImage(bl_resize)
-        '''
-        blockframe = customtkinter.CTkFrame(profile, fg_color='#292929', width=250, height=30)
-        blockframe.place(x=0, y=460)
-
-        block = customtkinter.CTkButton(blockframe, width=240, height=20, fg_color='#292929', text='Block User', image=bl1, compound='left')
-        block.place(x=5, y=5)
-
-        status_box(profile, 'Available')
-        '''   
 
         def update():
             global DisplayedUserID
@@ -273,7 +232,7 @@ def chat():
                 message_label.grid(row = 0, column = 1, pady = 30)
 
                 profilePicture = ImageTk.PhotoImage(Image.open(fileName).resize((65, 65)))
-                pictureLabel = customtkinter.CTkLabel(m_frame, image=profilePicture)
+                pictureLabel = customtkinter.CTkLabel(master=m_frame, image=profilePicture)
                 pictureLabel.image = profilePicture
                 pictureLabel.grid(row = 0, column = 0, sticky = 'w')
 
@@ -322,17 +281,41 @@ def user_profile():
         pictureLabel.image = profilePicture
         pictureLabel.place(x = 40, y = 50)
 
+    aboutFrame = customtkinter.CTkFrame(masterFrame, height=120, width=200, bg='#292929')
     # about
-    def about(win):
-        about = tkinter.Frame(win, height=120, width=200, bg='#292929')
-        about.place(x=40, y=340)
+    def about():
+        aboutFrame.place(x=745, y=50)
 
-        aboutme = customtkinter.CTkLabel(about, text='About Me', text_color='white', width=40, text_font=('Georgia', 13))
+        aboutme = customtkinter.CTkLabel(aboutFrame, text='About Me', text_color='white', width=40,  text_font=('uni sans', 15, 'bold'))
         aboutme.place(x=10, y=5)
 
-        abt = customtkinter.CTkTextbox(about, height=80, width=180)
+        abt = customtkinter.CTkLabel(aboutFrame, height=80, width=180, text = functions_chat.get_bio(functions_chat.CurrentUserID)[1], anchor='nw', justify = 'left')
         abt.place(x=10, y=30)
     
+    def execute_about_edit(aboutStr):
+        functions_chat.update_bio(aboutStr)
+        for widget in aboutFrame.winfo_children():
+            widget.destroy()
+        aboutEditButton.configure(text = 'Edit About me', command=about_edit)
+        about()
+
+    def about_edit():
+        for widget in aboutFrame.winfo_children():
+            widget.destroy()
+        
+        aboutFrame.place(x=745, y=50)
+
+        aboutme = customtkinter.CTkLabel(aboutFrame, text='About Me', text_color='white', width=40, text_font=('Uni Sans', 13))
+        aboutme.place(x=10, y=5)
+
+        abt = customtkinter.CTkEntry(aboutFrame, height=80, width=180)
+        abt.place(x=10, y=30)
+
+        aboutEditButton.configure(text = 'Done', command = lambda: execute_about_edit(abt.get()))
+
+    aboutEditButton = customtkinter.CTkButton(masterFrame, text = 'Edit About me', width = 200, command=about_edit)
+    aboutEditButton.place(x = 745, y = 180)
+
     detail = customtkinter.CTkFrame(masterFrame, width=425, height=250)  # fg_color='black'
 
     def details(win):
@@ -358,21 +341,22 @@ def user_profile():
         password = customtkinter.CTkLabel(detail, width=20, height=10, text='Password', text_font=('uni sans', 15, 'bold'))
         password.place(x=15, y=180)
 
-        passwordLabel = customtkinter.CTkLabel(detail, text=credentials[3], anchor = 'w', justify = 'left', text_font=('uni sans', 12))
+        passwordLabel = customtkinter.CTkLabel(detail, text='*****', anchor = 'w', justify = 'left', text_font=('uni sans', 12))
         passwordLabel.place(x=15, y=205)
-
+    
     def execute_edit(username, email, password):
         nonlocal detail
         functions_chat.profile_update(email, username, password)
         for widget in detail.winfo_children():
             widget.destroy()
         details(masterFrame)
-    
+        editProfileButton.configure(text = 'Edit Account details', command=lambda: details_edit(masterFrame))
+
     def details_edit(win):
         nonlocal detail
         nonlocal editProfileButton
 
-        editProfileButton.configure(text = 'done', command = lambda: execute_edit(usernameEntry.get(), emailEntry.get(), passwordEntry.get()))
+        editProfileButton.configure(text = 'Done', command = lambda: execute_edit(usernameEntry.get(), emailEntry.get(), passwordEntry.get()))
 
         for widget in detail.winfo_children():
             widget.destroy()
@@ -401,52 +385,10 @@ def user_profile():
 
         passwordEntry = customtkinter.CTkEntry(detail, width=350, height=15, fg_color='#292929', border_width=2, corner_radius=15, state='normal')
         passwordEntry.insert(0, credentials[3])
-        passwordEntry.place(x=15, y=210)
+        passwordEntry.place(x=15, y=210)    
 
     editProfileButton = customtkinter.CTkButton(masterFrame, width = 425, text = 'Edit Account details', command=lambda: details_edit(masterFrame))
     editProfileButton.place(x = 310, y = 310)
-
-    def socials(win):
-        social = customtkinter.CTkFrame(win, height=185, width=260)
-        social.place(x=750, y=50)
-
-        fbent = customtkinter.CTkEntry(social, width=225, height=23, fg_color='#292929', border_width=1, placeholder_text='Facebook profile', placeholder_text_color='silver', corner_radius=5, text_color='silver')
-        fbent.place(x=5, y=30)
-
-        igent = customtkinter.CTkEntry(social, width=225, height=23, fg_color='#292929', border_width=1, placeholder_text='Instagram profile', placeholder_text_color='silver', corner_radius=5, text_color='silver')
-        igent.place(x=5, y=60)
-
-        ytent = customtkinter.CTkEntry(social, width=225, height=23, fg_color='#292929', border_width=1, placeholder_text='YouTube channel', placeholder_text_color='silver', corner_radius=5, text_color='silver')
-        ytent.place(x=5, y=90)
-
-        twent = customtkinter.CTkEntry(social, width=225, height=23, fg_color='#292929', border_width=1, placeholder_text='Twitter account', placeholder_text_color='silver', corner_radius=5, text_color='silver')
-        twent.place(x=5, y=120)
-
-        otent = customtkinter.CTkEntry(social, width=225, height=23, fg_color='#292929', border_width=1, placeholder_text='yourwebsite.com', placeholder_text_color='silver', corner_radius=5, text_color='silver')
-        otent.place(x=5, y=150)
-
-    def status(win):
-        stat = customtkinter.CTkFrame(win, width=425, height=30)
-        stat.place(x=250, y=317)
-        statuslabel = customtkinter.CTkLabel(stat, width=20, text='Status : ')
-        statuslabel.place(x=10, y=2)
-        options = ['Available', 'Away', 'Busy', 'Invisible', 'Do Not Disturb']
-        st = customtkinter.CTkOptionMenu(stat, values=options, width=250, height=20, fg_color='#404040', button_color='teal')
-        st.place(x=65, y=5)
-        bell = Image.open(r"C:\Users\Sanje\Downloads\notif.png")
-        bell_resize = bell.resize((20, 20))
-        bell1 = ImageTk.PhotoImage(bell_resize)
-        notif = customtkinter.CTkButton(stat, width=7, height=7, fg_color='#292929', image=bell1, text='', state='disabled')
-        notif.place(x=325, y=2)
-        notification = customtkinter.CTkSwitch(stat, width=50, height=20, onvalue='on', offvalue='off', fg_color='teal', text='')
-        notification.place(x=360, y=3)
-
-    def switch(win):
-        sw = Image.open(r"C:\Users\Sanje\Downloads\switch.png")
-        sw_resize = sw.resize((40, 40))
-        sw1 = ImageTk.PhotoImage(sw_resize)
-        switch_acc = customtkinter.CTkButton(win, width=50, height=40, image=sw1, fg_color='#292929', text='Switch Accounts', compound='top')
-        switch_acc.place(x=250, y=355)
 
     def log_out(win):
         def delete():
@@ -460,14 +402,12 @@ def user_profile():
         logout.place(x=310, y=355)
 
     frame2(masterFrame)
-    #about(masterFrame)
+    about()
     details(masterFrame)
-    #socials(masterFrame)
-    #status(masterFrame)
-    #switch(masterFrame)
     log_out(masterFrame)
 
 def add_dms():
+
     def search():
         email = userSearchEntry.get()
         user = functions_chat.get_user(email)
@@ -509,12 +449,18 @@ def add_dms():
     app.columnconfigure(0, weight = 1)
     masterFrame = customtkinter.CTkFrame(app)
     masterFrame.grid(row = 0, column = 0, columnspan = 5, sticky = 'nsew')
+    bg = customtkinter.CTkFrame(masterFrame, height=200, width=2000, border=0, fg_color='purple')  # 003366 #ec4d37
+    addFriendsLabel = customtkinter.CTkLabel(bg, text='Add Friends', text_font=('Uni Sans', 30, 'bold'))
     userInfoFrame = customtkinter.CTkFrame(masterFrame, width = 800, height = 400)
-    userSearchEntry = customtkinter.CTkEntry(masterFrame, width = 600, height = 40)
+    userSearchEntry = customtkinter.CTkEntry(masterFrame, width = 600, height = 40, placeholder_text='Enter email')
     searchButton = customtkinter.CTkButton(app, text='Search', command=search, width = 190, height = 40)
-    userInfoFrame.place(x = 400, y = 100)
-    userSearchEntry.place(x = 400, y = 50)
-    searchButton.place(x = 1010, y = 50)
+    messageLabel = customtkinter.CTkLabel(userInfoFrame, text = 'Find new friends', text_font=('Uni Sans', 20), width = 200, justify = 'center')
+    messageLabel.place(x = 300, y = 200)
+    userInfoFrame.place(x = 400, y = 160)
+    userSearchEntry.place(x = 400, y = 610)
+    searchButton.place(x = 1010, y = 610)
+    bg.place(x=0, y=0)
+    addFriendsLabel.place(x=250, y=80)
 
 def mode():
     app.rowconfigure(0, weight = 1)
@@ -528,6 +474,25 @@ def mode():
     chatMode = customtkinter.CTkFrame(master=modeSelecter, height=75)
     friendsMode = customtkinter.CTkFrame(master=modeSelecter, height=75)
     settingsMode = customtkinter.CTkFrame(master=modeSelecter, height=75)
+
+    chatMode.columnconfigure(0, weight = 1)
+    friendsMode.columnconfigure(0, weight = 1)
+    settingsMode.columnconfigure(0, weight = 1)
+
+    chatsPicture = ImageTk.PhotoImage(Image.open('ImageResources/chats.png').resize((70, 70)))
+    chatsLabel = customtkinter.CTkLabel(chatMode, image=chatsPicture, width = 75)
+    chatsLabel.image = chatsPicture
+    chatsLabel.grid(row = 0, column = 0, pady = 5)
+
+    friendsPicture = ImageTk.PhotoImage(Image.open('ImageResources/friends.png').resize((70, 70)))
+    friendsLabel = customtkinter.CTkLabel(friendsMode, image = friendsPicture, width = 75)
+    friendsLabel.image = friendsPicture
+    friendsLabel.grid(row = 0, column = 0, pady = 5)
+
+    settingsPicture = ImageTk.PhotoImage(Image.open('ImageResources/settings.png').resize((70, 70)))
+    settingsLabel = customtkinter.CTkLabel(settingsMode, image = settingsPicture, width = 75)
+    settingsLabel.image = settingsPicture
+    settingsLabel.grid(row = 0, column = 0, pady = 5)
 
     def enter(event):
         event.widget.configure(fg_color='yellow')
@@ -567,17 +532,13 @@ def on_close():
     flag = False 
     app.destroy()
 
+app.protocol("WM_DELETE_WINDOW", on_close)
+
 def main():
-    global app
-    app.geometry("1600x900")
-    app.title("DISCARD")
-    app.resizable(False, False)
     
     mode()
     chat()
 
-    app.protocol("WM_DELETE_WINDOW", on_close)
-
     app.mainloop()
 
-#main()
+main()

@@ -18,14 +18,14 @@ def main():
     signupframe = CTkFrame(bob, width=400, height=450, corner_radius=15, fg_color='black')  # bg='#292929'
     signupframe.place(x=490, y=25)
 
-    pictureFrame = CTkFrame(bob, width = 400, height = 450, corner_radius = 15, fg_color='#1e1c1c')
-    pictureFrame.place(x= 50, y = 25)
+    pictureFrame = CTkFrame(bob, width = 300, height = 300, corner_radius = 15, fg_color='#1e1c1c')
+    pictureFrame.place(x= 75, y = 50)
 
     profilePicturePath = "ImageResources/DefaultProfile.png"
     profilePicture = ImageTk.PhotoImage(Image.open(profilePicturePath).resize((300, 300)))
     pictureLabel = CTkLabel(pictureFrame, image=profilePicture)
     pictureLabel.image = profilePicture
-    pictureLabel.pack()
+    pictureLabel.place(x = 0, y = 0)
 
     def changeFile():
         global profilePicturePath
@@ -38,13 +38,27 @@ def main():
         title='Open file',
         initialdir='/',
         filetypes=filetypes)
-        print(profilePicturePath)
         img2 = ImageTk.PhotoImage(Image.open(profilePicturePath).resize((300, 300)))
         pictureLabel.configure(image=img2)
         pictureFrame.image = img2
 
-    fileChange = CTkButton(bob, text='Change Profile picture', command=changeFile)
-    fileChange.place(x = 150, y = 400)
+    fileChange = CTkButton(bob, text='Change Profile picture', command=changeFile, width = 300)
+    fileChange.place(x = 75, y = 400)
+
+    def signup():
+        if emailentry.get().replace(" ", "") != '' and usernameentry.get().replace(" ", "") != '' and passwordentry.get().replace(" ", "") != '':
+            with open(profilePicturePath, 'rb') as file:
+                binaryData = file.read()
+            ret = functions_user.create_user(emailentry.get().replace(" ", ""), usernameentry.get().replace(" ", ""), passwordentry.get().replace(" ", ""), binaryData)
+            if ret == True:
+                functions_user.login(emailentry.get(), passwordentry.get())
+                bob.destroy()
+                import UI_app_frame
+                UI_app_frame.main()
+            elif ret == False:
+                warning.config(text = "User already exists")
+        else:
+            warning.configure(text = "Complete all fields   ")    
 
     # email
     email = CTkLabel(signupframe, text='Email ID', width=20)
@@ -74,26 +88,17 @@ def main():
     tc = Button(signupframe, text='Terms & Conditions', border=0, bg='black', fg='white', activeforeground='sky blue', activebackground='black')
     tc.place(x=172, y=286)
 
+    '''
     # already have an account
     already = CTkLabel(signupframe,
                        text='Already have an account?')
     already.place(x=90, y=360)
     signin = Button(signupframe, text='Sign in', border=0, bg="black", fg='white', activeforeground='sky blue', activebackground='black')
     signin.place(x=235, y=363)
-
-    def signup():
-        if emailentry.get().replace(" ", "") != '' and usernameentry.get().replace(" ", "") != '' and passwordentry.get().replace(" ", "") != '':
-            with open(profilePicturePath, 'rb') as file:
-                binaryData = file.read()
-            functions_user.create_user(emailentry.get().replace(" ", ""), usernameentry.get().replace(" ", ""), passwordentry.get().replace(" ", ""), binaryData)
-            #User already exists
-        else:
-            warning.configure(text = "Complete all fields   ")
+    '''
 
     # sign up
-    signup = CTkButton(signupframe, text='Sign up', width=350, corner_radius=15, fg_color='teal', hover_color='sea green', command=signup)
-    signup.place(x=20, y=320)
+    signup = CTkButton(signupframe, text='Sign up', width=350, corner_radius=15, hover_color='sea green', command=signup)
+    signup.place(x=20, y=330)
 
-main()
-
-bob.mainloop()
+    bob.mainloop()

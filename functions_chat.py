@@ -4,11 +4,10 @@ import connect
 mydb = connect.mydb
 cursor = connect.cursor
 
-
 with open('credentials.txt', 'r') as f:
     CurrentUserID, email, password = f.read().split()
 
-
+'''
 def create_group(groupName, ownerID, participant1, participant2, *participantIDs):
     try:
         cursor.execute(f"INSERT INTO `groups` (`group name`) VALUES ('{groupName}')")
@@ -51,6 +50,7 @@ def remove_participant_from_group(groupID, participantID, *participantIDs):
         logging.info(f"Removed participant {participantID} {participantIDs} from group {groupID}")
     except:
         logging.error("Couldn't remove participant from group")
+'''
 
 def get_dm_messages(dmID):
     cursor.execute(f"SELECT `dm messages`.*, users.`user name` FROM `dm messages`, users  WHERE `dm id` = {dmID} AND `sender user id` = users.`user id` ORDER BY `time sent`;")
@@ -115,7 +115,16 @@ def profile_update(email, username, password):
             f.write(credentialsString)
     read_credentials()
 
+def update_bio(about):
+    cursor.execute(f"UPDATE bio SET `About Me` = '{about}' WHERE `user id` = {CurrentUserID}")
+    mydb.commit()
+
 def read_credentials():
     global CurrentUserID, email, password
     with open('credentials.txt', 'r') as f:
         CurrentUserID, email, password = f.read().split()
+
+def unfriend(dmID):
+    cursor.execute(f"DELETE FROM `dm messages` WHERE `dm id` = {dmID}")
+    cursor.execute(f"DELETE FROM `dm members` WHERE `dm id` = {dmID}")
+    cursor.execute(f"DELETE FROM `dm id` WHERE (`dm id` = {dmID})")
