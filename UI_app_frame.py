@@ -8,6 +8,7 @@ import threading
 import time
 from tktooltip import ToolTip
 import os
+from tkinter import filedialog
 
 mydb = connect.mydb
 cursor = mydb.cursor(buffered=True)
@@ -257,7 +258,7 @@ def user_profile():
     masterFrame.place(x = 250, y = 160)
 
     def Edit(win, det, a, b):
-        edit = customtkinter.CTkButton(win, width=20, height=20, text='Edit', fg_color='teal', text_color='white', hover_color='teal', command=lambda: edit_clicked(det) )
+        edit = customtkinter.CTkButton(win, width=20, height=20, text='Edit', fg_color='teal', text_color='white', hover_color='teal', command=lambda: edit_clicked(det))
         edit.place(x=a, y=b)
 
         def edit_clicked(entry):
@@ -274,12 +275,33 @@ def user_profile():
                 entry.configure(state='disabled')
             edit.configure(command=edit_clicked_twice)
 
-    #Profile Picture
-    def frame2(win):
-        profilePicture = ImageTk.PhotoImage(Image.open("ProfilePictures/" + str(functions_chat.CurrentUserID) + ".png").resize((250, 250)))
-        pictureLabel = customtkinter.CTkLabel(win, image=profilePicture)
-        pictureLabel.image = profilePicture
-        pictureLabel.place(x = 40, y = 50)
+    profilePicturePath = "ProfilePictures/" + str(functions_chat.CurrentUserID) + ".png"
+    profilePicture = ImageTk.PhotoImage(Image.open(profilePicturePath).resize((250, 250)))
+    pictureLabel = customtkinter.CTkLabel(masterFrame, image=profilePicture)
+    pictureLabel.image = profilePicture
+    pictureLabel.place(x = 40, y = 50)
+    
+    def changeFile():
+        nonlocal profilePicturePath
+        nonlocal pictureLabel
+        filetypes = (
+        ('image files', '*.png'),
+        ('All files', '*.*')
+        )
+        profilePicturePath = filedialog.askopenfilename(
+        title='Open file',
+        initialdir='/',
+        filetypes=filetypes)
+        img2 = ImageTk.PhotoImage(Image.open(profilePicturePath).resize((250, 250)))
+        pictureLabel.configure(image=img2)
+        pictureLabel.image = img2
+        with open(profilePicturePath, 'rb') as file:
+                binaryData = file.read()
+        functions_chat.update_pfp(binaryData)
+
+    fileChange = customtkinter.CTkButton(masterFrame, text='Change Profile picture', command=changeFile, width = 250)
+    fileChange.place(x = 40, y = 340)
+
 
     aboutFrame = customtkinter.CTkFrame(masterFrame, height=120, width=200, bg='#292929')
     # about
@@ -401,7 +423,6 @@ def user_profile():
         logout = customtkinter.CTkButton(win, width=125, height=50, image=lo1, fg_color='#292929', text='Log Out', compound='top', command = delete)
         logout.place(x=310, y=355)
 
-    frame2(masterFrame)
     about()
     details(masterFrame)
     log_out(masterFrame)

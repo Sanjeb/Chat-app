@@ -88,15 +88,6 @@ def main():
     tc = Button(signupframe, text='Terms & Conditions', border=0, bg='black', fg='white', activeforeground='sky blue', activebackground='black')
     tc.place(x=172, y=286)
 
-    '''
-    # already have an account
-    already = CTkLabel(signupframe,
-                       text='Already have an account?')
-    already.place(x=90, y=360)
-    signin = Button(signupframe, text='Sign in', border=0, bg="black", fg='white', activeforeground='sky blue', activebackground='black')
-    signin.place(x=235, y=363)
-    '''
-
     # sign up
     signup = CTkButton(signupframe, text='Sign up', width=350, corner_radius=15, hover_color='sea green', command=signup)
     signup.place(x=20, y=330)

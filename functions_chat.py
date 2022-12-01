@@ -128,3 +128,9 @@ def unfriend(dmID):
     cursor.execute(f"DELETE FROM `dm messages` WHERE `dm id` = {dmID}")
     cursor.execute(f"DELETE FROM `dm members` WHERE `dm id` = {dmID}")
     cursor.execute(f"DELETE FROM `dm id` WHERE (`dm id` = {dmID})")
+
+def update_pfp(picture):
+    command = "UPDATE `users` SET picture = %s WHERE `user id` = %s"
+    values = (picture, CurrentUserID)
+    cursor.execute(command, values)
+    mydb.commit()
