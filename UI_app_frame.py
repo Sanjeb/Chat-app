@@ -6,7 +6,6 @@ import functions_chat
 import connect
 import threading
 import time
-from tktooltip import ToolTip
 import os
 from tkinter import filedialog
 
