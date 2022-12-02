@@ -5,6 +5,7 @@ import logging
 
 def login():
     #Declaring win variables
+    customtkinter.set_appearance_mode("dark")
     win = customtkinter.CTk()
     win.geometry("1280x720")
     win.title("LOGIN")

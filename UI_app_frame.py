@@ -13,7 +13,7 @@ from tkinter import filedialog
 mydb = connect.mydb
 cursor = mydb.cursor(buffered=True)
 
-
+customtkinter.set_appearance_mode("dark")
 app = customtkinter.CTk()
 app.geometry("1600x900")
 app.title("DISCARD")

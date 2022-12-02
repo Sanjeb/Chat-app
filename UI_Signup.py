@@ -6,6 +6,7 @@ import functions_user
 
 
 # window stuff
+customtkinter.set_appearance_mode("dark")
 bob = CTk()
 bob.title('sign up')
 bob.geometry('950x500')
