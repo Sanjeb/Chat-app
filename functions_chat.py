@@ -77,7 +77,9 @@ def get_dm_users():
     return ids #Returns list in the format [(UserID, DMID, UserName), (UserID, DMID, UserName)]
  
 def send_dm_messages(dmID, message):
-    cursor.execute(f"INSERT INTO `dm messages` (`message text`, `sender user id`, `dm id`) VALUES ('{message}', '{CurrentUserID}', '{dmID}');")
+    values = (message, CurrentUserID, dmID)
+    command = "INSERT INTO `dm messages` (`message text`, `sender user id`, `dm id`) VALUES (%s, %s, %s);"
+    cursor.execute(command, values)
     mydb.commit()
 
 def get_user(email):
@@ -106,7 +108,9 @@ def get_bio(userID):
     return bio
 
 def profile_update(email, username, password):
-    cursor.execute(f"UPDATE `users` SET `email` = '{email}', `user name` = '{username}', `password` = '{password}' WHERE `user id` = {CurrentUserID}")
+    values = (email, username, password, CurrentUserID)
+    command = "UPDATE `users` SET `email` = %s, `user name` = %s, `password` = %s WHERE `user id` = %s"
+    cursor.execute(command, values)
     mydb.commit()
     cursor.execute(f"SELECT * FROM `users` WHERE `user id` = {CurrentUserID}")
     credentials = cursor.fetchone()
@@ -116,6 +120,8 @@ def profile_update(email, username, password):
     read_credentials()
 
 def update_bio(about):
+    command = "UPDATE bio SET `About Me` = %s WHERE `user id` = %s"
+    values = (about, CurrentUserID)
     cursor.execute(f"UPDATE bio SET `About Me` = '{about}' WHERE `user id` = {CurrentUserID}")
     mydb.commit()
 
