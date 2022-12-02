@@ -26,7 +26,6 @@ def chat():
 
     app.withdraw()
     app.deiconify()
-    app.columnconfigure(0, minsize = 75, weight = 0) #Column for sidebar/switcher between groups and DMs
     app.columnconfigure(1, minsize = 300, weight = 0) #Column for viewing chats
     app.columnconfigure(2, weight = 1) #Column for Viewing messages
     app.columnconfigure(3, minsize = 300, weight = 0) #Column for selected chat profile info
@@ -37,14 +36,9 @@ def chat():
     profile = customtkinter.CTkFrame(master=app) #Frame for Profile
     
     #Configures grid for all the frames in window
-    switcher.grid(column = 0, row = 0 , sticky = 'nsew')
     chats.grid(column = 1, row = 0, sticky = 'nsew')
     chat_window.grid(column = 2, row = 0, sticky = 'nsew')
     profile.grid(column = 3, row = 0, sticky = 'nsew')
-
-    #Switcher     
-    switcher.rowconfigure(0, weight = 1)
-    switcher.rowconfigure(1, weight = 1)
 
     #Message viewer
     def message_viewer(id):
