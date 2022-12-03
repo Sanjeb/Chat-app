@@ -1,6 +1,8 @@
-customtkinter
-tkinter
-mysql.connector
-MySQLdb
-PIL
-logging
+customtkinter 4.6.3:
+pip install customtkinter==4.6.3
+
+mysql.connector:
+pip install mysql-connector-python
+
+PIL:
+pip install Pillow

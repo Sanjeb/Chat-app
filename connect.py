@@ -8,5 +8,5 @@ with open('dbconnection.txt', 'r') as f:
     passwd = f.readline()
 
 mydb = mysql.connector.connect(host = host, user = user, passwd = passwd, database = 'mydb')
-cursor = mydb.cursor()
+cursor = mydb.cursor(buffered=True)
 print(mydb)
