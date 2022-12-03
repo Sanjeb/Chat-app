@@ -94,6 +94,7 @@ def chat():
                 fileName = 'ProfilePictures/' + str(user[0]) + '.png'
                 nameLabel = customtkinter.CTkLabel(nameHolder, text = user[2], text_font = ('uni sans', 25, 'bold'), anchor = 'w', justify = 'left')
                 username = customtkinter.CTkLabel(profile, text=user[2], height=8, text_font=('uni sans', 17), width = 300, justify = 'center')
+                bio = functions_chat.get_bio(user[0])
                 
         profilePicture = ImageTk.PhotoImage(Image.open(fileName).resize((50, 50)))
         pictureLabel = customtkinter.CTkLabel(nameHolder, image=profilePicture, width = 70)
@@ -115,16 +116,16 @@ def chat():
 
         username.place(x=0, y=180)
 
-        unfr = customtkinter.CTkButton(profile, text="UNFRIEND", width=220, corner_radius=20, fg_color='#292929', border_width=2, border_color='teal', hover_color='teal', command= lambda: unfriend(id))
-        unfr.place(x=40, y=210)
+        unfriendButton = customtkinter.CTkButton(profile, text="UNFRIEND", width=220, corner_radius=20, fg_color='#292929', border_width=2, border_color='teal', hover_color='teal', command= lambda: unfriend(id))
+        unfriendButton.place(x=40, y=220)
 
-        abt = customtkinter.CTkFrame(profile, fg_color='#292929', width=280, height=100)
-        abt.place(x=10, y=270)
-        abtme = customtkinter.CTkLabel(abt, text='About me', text_font=('uni sans', 14), width=20)
-        abtme.place(x=10, y=10)
+        aboutFrame = customtkinter.CTkFrame(profile, fg_color='#292929', width=280, height=100)
+        aboutFrame.place(x=10, y=270)
+        aboutMeLabel = customtkinter.CTkLabel(aboutFrame, text='About me', text_font=('uni sans', 14), width=20)
+        aboutMeLabel.place(x=10, y=10)
 
-        desc = customtkinter.CTkLabel(abt, text="About me isn't working yet", fg_color='#292929', corner_radius=10, width=240, height=75, anchor='nw')
-        desc.place(x=0, y=35)
+        description = customtkinter.CTkLabel(aboutFrame, text=bio[1], fg_color='#292929', corner_radius=10, width=240, height=75, anchor='nw')
+        description.place(x=0, y=35)
 
         def update():
             global DisplayedUserID
@@ -169,17 +170,20 @@ def chat():
         entry.bind('<Return>', send)
         
         def get_new_messages():
-            global DisplayedUserID
-            global lastMessageID
-            global flag
-            flag = True
-            while flag:
-                time.sleep(2)
-                cursor.execute(f"SELECT * FROM `dm messages` WHERE `dm id` = {DisplayedUserID} AND `message id` > {lastMessageID}")
-                mydb.commit()
-                recs = cursor.fetchall()
-                if recs != []:
-                    update()
+            try:
+                global DisplayedUserID
+                global lastMessageID
+                global flag
+                flag = True
+                while flag:
+                    time.sleep(2)
+                    cursor.execute(f"SELECT * FROM `dm messages` WHERE `dm id` = {DisplayedUserID} AND `message id` > {lastMessageID}")
+                    mydb.commit()
+                    recs = cursor.fetchall()
+                    if recs != []:
+                        update()
+            except tkinter.TclError:
+                pass
         
         t1 = threading.Thread(target=get_new_messages)
         t1.start()
@@ -577,5 +581,3 @@ def main():
     chat()
 
     app.mainloop()
-
-main()

@@ -21,7 +21,6 @@ def login():
             win.destroy()
             import UI_app_frame
             UI_app_frame.main()
-            print("auth")
             logging.info("Succesfully authenticated")
 
     #On login button press function
