@@ -208,9 +208,19 @@ def chat():
         def func():
             m = functions_chat.get_dm_users() #Returns list in the format [(UserID, DMID, UserName, ProfilePicture), (UserID, DMID, UserName, ProfilePicture)]
             def enter(event):
-                event.widget.configure(fg_color='black')
+                try:
+                    event.widget.configure(fg_color='black')
+                    for widget in event.widget.winfo_children():
+                        widget.configure(bg = 'black')
+                except tkinter.TclError:
+                    pass
             def leave(event):
-                event.widget.configure(fg_color='#343638')
+                try:
+                    event.widget.configure(fg_color='#343638')
+                    for widget in event.widget.winfo_children():
+                        widget.configure(bg = '#343638')
+                except tkinter.TclError:
+                    pass
             def click(event, id):
                 global DisplayedUserID
                 for widget in chat_window.winfo_children():
@@ -223,7 +233,7 @@ def chat():
                     file.write(x[3])
 
                 m_frame = customtkinter.CTkFrame(master=chats_profiles, fg_color='#343638', corner_radius= 5)
-                message_label = customtkinter.CTkLabel(master=m_frame, text=x[2], anchor='w', text_font=('Uni Sans', 15))
+                message_label = tkinter.Label(master=m_frame, text=x[2], anchor='w', font=('Uni Sans', 15), bg = '#343638', fg = 'white')
                 message_label.grid(row = 0, column = 1, pady = 30)
 
                 profilePicture = ImageTk.PhotoImage(Image.open(fileName).resize((65, 65)))
@@ -234,6 +244,10 @@ def chat():
                 m_frame.bind('<Enter>', enter)
                 m_frame.bind('<Leave>', leave)
                 m_frame.canvas.bind("<Button-1>", lambda event, id = x[1]: click(event, id))
+                message_label.bind('<Enter>', enter)
+                message_label.bind('<Leave>', leave)
+                message_label.bind("<Button-1>", lambda event, id = x[1]: click(event, id))
+                
                 m_frame.grid(column = 0, sticky = 'ew')
             
         func()
@@ -495,24 +509,28 @@ def mode():
     settingsMode.columnconfigure(0, weight = 1)
 
     chatsPicture = ImageTk.PhotoImage(Image.open('ImageResources/chats.png').resize((70, 70)))
-    chatsLabel = customtkinter.CTkLabel(chatMode, image=chatsPicture, width = 75)
+    chatsLabel = tkinter.Label(chatMode, image=chatsPicture, width = 75, bg = '#343638')
     chatsLabel.image = chatsPicture
     chatsLabel.grid(row = 0, column = 0, pady = 5)
 
     friendsPicture = ImageTk.PhotoImage(Image.open('ImageResources/friends.png').resize((70, 70)))
-    friendsLabel = customtkinter.CTkLabel(friendsMode, image = friendsPicture, width = 75)
+    friendsLabel = tkinter.Label(friendsMode, image = friendsPicture, width = 75, bg = '#343638')
     friendsLabel.image = friendsPicture
     friendsLabel.grid(row = 0, column = 0, pady = 5)
 
     settingsPicture = ImageTk.PhotoImage(Image.open('ImageResources/settings.png').resize((70, 70)))
-    settingsLabel = customtkinter.CTkLabel(settingsMode, image = settingsPicture, width = 75)
+    settingsLabel = tkinter.Label(settingsMode, image = settingsPicture, width = 75, bg = '#343638')
     settingsLabel.image = settingsPicture
     settingsLabel.grid(row = 0, column = 0, pady = 5)
 
     def enter(event):
         event.widget.configure(fg_color='yellow')
+        for widget in event.widget.winfo_children():
+            widget.configure(bg = 'yellow')
     def leave(event):
         event.widget.configure(fg_color='#343638')
+        for widget in event.widget.winfo_children():
+            widget.configure(bg = '#343638')
     def click(event, id):
         for widget in app.winfo_children():
             widget.destroy()
@@ -537,6 +555,10 @@ def mode():
     settingsMode.bind('<Enter>', enter)
     settingsMode.bind('<Leave>', leave)
     settingsMode.canvas.bind("<Button-1>", lambda event, id = 2: click(event, id))
+
+    chatsLabel.bind("<Button-1>", lambda event, id = 0: click(event, id))
+    friendsLabel.bind("<Button-1>", lambda event, id = 1: click(event, id))
+    settingsLabel.bind("<Button-1>", lambda event, id = 2: click(event, id))
 
     chatMode.grid(column = 0, row = 0, sticky = 'nsew')
     friendsMode.grid(column = 1, row = 0, sticky = 'nsew')
