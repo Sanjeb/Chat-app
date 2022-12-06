@@ -7,6 +7,9 @@ with open('dbconnection.txt', 'r') as f:
     user = f.readline()
     passwd = f.readline()
 
-mydb = mysql.connector.connect(host = host, user = user, passwd = passwd, database = 'mydb')
-cursor = mydb.cursor(buffered=True)
-print(mydb)
+try:
+    mydb = mysql.connector.connect(host = host, user = user, passwd = passwd, database = 'mydb')
+    cursor = mydb.cursor(buffered=True)
+    print(mydb)
+except:
+    print("Connection lost")

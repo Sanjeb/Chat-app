@@ -23,8 +23,8 @@ def chat():
     global DisplayedUserID
     global lastMessageID
 
-    app.withdraw()
-    app.deiconify()
+    #app.withdraw()
+    #app.deiconify()
     app.columnconfigure(0, minsize = 0, weight = 0)
     app.columnconfigure(1, minsize = 300, weight = 0) #Column for viewing chats
     app.columnconfigure(2, weight = 1) #Column for Viewing messages

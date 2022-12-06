@@ -87,7 +87,6 @@ def main():
         if ret == 0:
             import UI_app_frame
             UI_app_frame.main()
-            print("auth")
             logging.info("Succesfully authenticated")
         else:
             login()

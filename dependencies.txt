@@ -1,4 +1,4 @@
-customtkinter 4.6.3:
+customtkinter 4.6.3 (Note: The app doesn't support customtkinter 5.0):
 pip install customtkinter==4.6.3
 
 mysql.connector:
