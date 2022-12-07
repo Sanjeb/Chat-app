@@ -1,5 +1,4 @@
 import mysql.connector 
-#import MySQLdb
 import logging
 
 with open('dbconnection.txt', 'r') as f:
