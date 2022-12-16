@@ -38,3 +38,10 @@ def login(email, password):
         return 1
     except:
         return 2
+
+def check_version():
+    cursor.execute("SELECT * FROM Version")
+    version = cursor.fetchall()
+    if version[0][0] == connect.version:
+        return True
+    else: return False

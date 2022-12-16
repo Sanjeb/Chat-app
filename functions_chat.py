@@ -71,7 +71,7 @@ def get_dm_users():
     ids = []
     dms = cursor.fetchall()
     for x in dms:
-        cursor.execute(f" SELECT `dm members`.*, users.`user name`, users.picture FROM `dm members`, users WHERE `dm members`.`dm id` = {x[1]} and `dm members`.`user id` != {CurrentUserID} AND `dm members`.`user id` = `users`.`user id`;")
+        cursor.execute(f"SELECT `dm members`.*, users.`user name`, users.picture FROM `dm members`, users WHERE `dm members`.`dm id` = {x[1]} and `dm members`.`user id` != {CurrentUserID} AND `dm members`.`user id` = `users`.`user id`;")
         dm_ids = cursor.fetchall()
         ids.append(dm_ids[0])
     return ids #Returns list in the format [(UserID, DMID, UserName), (UserID, DMID, UserName)]

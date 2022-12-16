@@ -14,6 +14,7 @@ bob.title('DISCARD')
 bob.geometry('1600x900')
 bob.resizable(False,False)
 bob.configure(fg_color='#1e1c1c')
+bob.iconbitmap("ImageResources/discard.ico")
 
 def main():
 

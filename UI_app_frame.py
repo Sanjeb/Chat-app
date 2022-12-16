@@ -19,6 +19,7 @@ app = customtkinter.CTk()
 app.geometry("1600x900")
 app.title("DISCARD")
 app.resizable(False, False)
+app.iconbitmap("ImageResources/discard.ico")
 
 lastMessageID = 0
 def chat():
@@ -792,3 +793,4 @@ def main():
 
     app.mainloop()
 
+main()

@@ -1,13 +1,13 @@
 import mysql.connector 
 import logging
+import pickle
 
-with open('dbconnection.txt', 'r') as f:
-    host = f.readline()
-    user = f.readline()
-    passwd = f.readline()
+with open('dbconnection.bin', 'rb') as f:
+    credentials = pickle.load(f)
+    host, user, password, version = credentials
 
 try:
-    mydb = mysql.connector.connect(host = host, user = user, passwd = passwd, database = 'mydb')
+    mydb = mysql.connector.connect(host = host, user = user, password = password, database = 'mydb')
     cursor = mydb.cursor(buffered=True)
     print(mydb)
 except:

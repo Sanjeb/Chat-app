@@ -2,6 +2,7 @@ import tkinter
 import customtkinter
 import functions_user
 import logging
+import tkinter.messagebox as messagebox
 
 def login():
     #Declaring win variables
@@ -9,7 +10,8 @@ def login():
     win = customtkinter.CTk()
     win.geometry("1280x720")
     win.title("LOGIN")
-  
+    win.iconbitmap("ImageResources/discard.ico")
+
     #Checks if user has already logged in and authenticates with database
     def credentials():
         global id
@@ -79,16 +81,19 @@ def login():
 def main():
     #Checks if user has already logged in and authenticates with database
     try:
-        global id
-        global email
-        with open('credentials.txt', 'r') as f:
-            id, email, password = f.read().split()
-        ret = functions_user.login(email, password)
-        if ret == 0:
-            import UI_app_frame
-            UI_app_frame.main()
-            logging.info("Succesfully authenticated")
+        if functions_user.check_version():
+            global id
+            global email
+            with open('credentials.txt', 'r') as f:
+                id, email, password = f.read().split()
+            ret = functions_user.login(email, password)
+            if ret == 0:
+                import UI_app_frame
+                UI_app_frame.main()
+                logging.info("Succesfully authenticated")
+            else:
+                login()
         else:
-            login()
+            messagebox.showerror("Error", "This version is no longer supported")
     except FileNotFoundError:
         login()

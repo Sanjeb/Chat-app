@@ -11,3 +11,4 @@ discard_final7.py
 #Files
 __pycache__/
 ProfilePictures
+dbconnection.bin

@@ -13,7 +13,7 @@ bob.title('sign up')
 bob.geometry('950x500')
 bob.resizable(False, False)
 bob.configure(fg_color='#1e1c1c')
-
+bob.iconbitmap("ImageResources/discard.ico")
 
 def main():
 
