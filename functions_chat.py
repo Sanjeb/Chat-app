@@ -122,7 +122,7 @@ def profile_update(email, username, password):
 def update_bio(about):
     command = "UPDATE bio SET `About Me` = %s WHERE `user id` = %s"
     values = (about, CurrentUserID)
-    cursor.execute(f"UPDATE bio SET `About Me` = '{about}' WHERE `user id` = {CurrentUserID}")
+    cursor.execute(command, values)
     mydb.commit()
 
 def read_credentials():
@@ -139,4 +139,10 @@ def update_pfp(picture):
     command = "UPDATE `users` SET picture = %s WHERE `user id` = %s"
     values = (picture, CurrentUserID)
     cursor.execute(command, values)
+    mydb.commit()
+
+def update_socials(facebook,instagram,spotify,youtube):
+    command = f'UPDATE bio SET Instagram = %s, Spotify = %s, Facebook = %s, Youtube = %s WHERE `user id` = {CurrentUserID}'
+    record = (instagram,spotify,facebook,youtube)
+    cursor.execute(command,record)
     mydb.commit()
