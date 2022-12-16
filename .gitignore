@@ -9,5 +9,5 @@ testing.py
 discard_final7.py
 
 #Files
-__pycache__/
+__pycache__
 ProfilePictures
