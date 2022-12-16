@@ -146,3 +146,9 @@ def update_socials(facebook,instagram,spotify,youtube):
     record = (instagram,spotify,facebook,youtube)
     cursor.execute(command,record)
     mydb.commit()
+
+def submit_rating(slider, message):
+    feedbackRecord = (CurrentUserID , slider, message)
+    command = f'INSERT INTO feedback(`user id`, `rating`, `feedback`) VALUES(%s,%s,%s)'
+    cursor.execute(command, feedbackRecord)
+    mydb.commit()

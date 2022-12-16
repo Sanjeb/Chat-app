@@ -622,12 +622,7 @@ def add_dms():
 def rate_us():
 
     def submit_clicked():
-        credentials = functions_chat.get_user(functions_chat.email)
-        feedbackRecord = (credentials[0],slider.get(),feedbackTextbox.get("1.0"), datetime.date.today())
-        command = f'INSERT INTO feedback VALUES(%s,%s,%s,%s)'
-        cursor.execute(command, feedbackRecord)
-        mydb.commit()
-
+        functions_chat.submit_rating(slider.get(), feedbackTextbox.get("1.0", "end-1c"))
         rateus.destroy()
         
     rateus = customtkinter.CTkToplevel()
@@ -647,12 +642,12 @@ def rate_us():
 
     slider = customtkinter.CTkSlider(rateframe, from_=0, to=5, number_of_steps = 5, width = 250, button_color = 'sky blue')
     slider.place(x=50, y = 30)
-    slider.set(0)
+    slider.set(5)
 
-    smiley = ImageTk.PhotoImage(Image.open('ImageResources/smiley.png').resize((40,40)))
+    smiley = ImageTk.PhotoImage(Image.open('ImageResources/sad.png').resize((40,40)))
     smileylabel = customtkinter.CTkLabel(rateframe, width = 15, height = 15, text = '', image = smiley)
     smileylabel.place(x=7,y =17)
-    sad = ImageTk.PhotoImage(Image.open('ImageResources/sad.png').resize((43,43)))
+    sad = ImageTk.PhotoImage(Image.open('ImageResources/smiley.png').resize((43,43)))
     sadlabel = customtkinter.CTkLabel(rateframe, width = 15, height = 15, text = '', image = sad)
     sadlabel.place(x=300,y = 15)
 
@@ -797,4 +792,3 @@ def main():
 
     app.mainloop()
 
-main()

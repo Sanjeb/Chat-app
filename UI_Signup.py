@@ -3,6 +3,7 @@ from tkinter import filedialog
 from customtkinter import *
 from PIL import Image, ImageTk
 import functions_user
+import customtkinter
 
 
 # window stuff
@@ -54,6 +55,8 @@ def main():
             if ret == True:
                 functions_user.login(emailentry.get(), passwordentry.get())
                 bob.destroy()
+                import intro_final
+                intro_final.main()
                 import UI_app_frame
                 UI_app_frame.main()
             elif ret == False:
