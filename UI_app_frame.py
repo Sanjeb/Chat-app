@@ -244,11 +244,6 @@ def chat():
 
 def user_profile():
     app.columnconfigure(0, weight = 1)
-    #Color background on top
-##    frame1 = tkinter.Frame(app, height=200, width=2000, border=0, bg='navy blue')  # 003366 #ec4d37
-##    prof = customtkinter.CTkLabel(frame1, text='My Profile', text_font=('Uni Sans', 30, 'bold'))
-##    prof.place(x=250, y=80)
-##    frame1.place(x=0, y=0)
 
     def changeFile():
         nonlocal profilePicturePath
@@ -276,7 +271,7 @@ def user_profile():
         for widget in acctframe.winfo_children():
             widget.destroy()
         editProfileButton.destroy()    
-        other_handles(prof)
+        other_handles()
 
     def details_clicked():
         global editmedia
@@ -305,139 +300,55 @@ def user_profile():
         for widget in acctframe.winfo_children():
             widget.destroy()
 
-##        info = customtkinter.CTkLabel(detail, text='Account Info', width=20, text_font=('uni sans', 20, 'bold'))
-##        info.place(x=15, y=10)
-
         credentials = functions_chat.get_user(functions_chat.email)
-        emailent = customtkinter.CTkEntry(acctframe,
-                            width = 325,
-                            height = 27,
-                            fg_color = '#151515',
-                            border_width= 0,
-                            corner_radius = 15,
-                            text_font = ('Bahnschrift SemiLight',18))
+        emailent = customtkinter.CTkEntry(acctframe, width = 325, height = 27, fg_color = '#151515', border_width= 0, corner_radius = 15, text_font = ('Bahnschrift SemiLight',18))
         emailent.insert(0,credentials[1])
         emailent.place(x=60,y=100)
 
-        email = customtkinter.CTkLabel(acctframe,
-                         width=20,
-                         height=7,
-                         text='Email ID',
-                         text_font = ('smth',18,'bold'))
+        email = customtkinter.CTkLabel(acctframe, width=20, height=7, text='Email ID', text_font = ('smth',18,'bold'))
         email.place(x=75, y = 65)
 
-        unent = customtkinter.CTkEntry(acctframe,
-                            width = 325,
-                            height = 27,
-                            fg_color = '#151515',
-                            border_width= 0,
-                            corner_radius = 15,
-                         text_font = ('Bahnschrift SemiLight',18))
+        unent = customtkinter.CTkEntry(acctframe, width = 325, height = 27, fg_color = '#151515', border_width= 0, corner_radius = 15, text_font = ('Bahnschrift SemiLight',18))
         unent.place(x=60,y=200)
         unent.insert(0,credentials[2])
 
-        un = customtkinter.CTkLabel(acctframe,
-                      width=10,
-                      height=7,
-                      text='Username',
-                      text_font = ('smth',18,'bold'))
+        un = customtkinter.CTkLabel(acctframe, width=10, height=7, text='Username', text_font = ('smth',18,'bold'))
         un.place(x=75, y = 165)
 
-        pwent = customtkinter.CTkEntry(acctframe,
-                            width = 325,
-                            height = 27,
-                            fg_color = '#151515',
-                            border_width= 0,
-                            corner_radius = 15,
-                         text_font = ('Bahnschrift SemiLight',18))
+        pwent = customtkinter.CTkEntry(acctframe, width = 325, height = 27, fg_color = '#151515', border_width= 0, corner_radius = 15, text_font = ('Bahnschrift SemiLight',18))
         pwent.place(x=60,y=300)
         pwent.insert(0,credentials[3])
 
-        pw = customtkinter.CTkLabel(acctframe,
-                      width=20,
-                      height=7,
-                      text='Password',
-                      text_font = ('smth',18,'bold'))
+        pw = customtkinter.CTkLabel(acctframe, width=20, height=7, text='Password', text_font = ('smth',18,'bold'))
         pw.place(x=75, y = 265)
     
 
 
-    profile_mainframe = customtkinter.CTkFrame(app,
-                                width = 1600,
-                                height = 900,
-                                fg_color = '#202020',
-                                corner_radius = 0)
+    profile_mainframe = customtkinter.CTkFrame(app, width = 1600, height = 900, fg_color = '#202020', corner_radius = 0)
     profile_mainframe.place(x=0, y=0)
 
-    prof = customtkinter.CTkFrame(profile_mainframe,
-                          width = 1400,
-                          height = 700,
-                          fg_color = '#101010',
-                          corner_radius = 0)
+    prof = customtkinter.CTkFrame(profile_mainframe, width = 1400, height = 700, fg_color = '#101010', corner_radius = 0)
     prof.place(x=100, y = 100)
 
     #the labels on top
-    toplabel = customtkinter.CTkLabel(prof,
-                        width=1400,
-                        height = 150,
-                        fg_color = '#0d98ba',
-                        corner_radius = 0,
-                        text = '')
+    toplabel = customtkinter.CTkLabel(prof, width=1400, height = 150, fg_color = '#0d98ba', corner_radius = 0, text = '')
     toplabel.place(x=0,y=0)
 
-    myprofile = customtkinter.CTkLabel(prof,
-                         width = 20,
-                         height = 10,
-                         fg_color = '#0d98ba',
-                         text = 'My Profile',
-                         text_color = 'white',
-                         text_font = ('Bahnschrift SemiLight',23,'bold')) #Ebrima
+    myprofile = customtkinter.CTkLabel(prof, width = 20, height = 10, fg_color = '#0d98ba', text = 'My Profile', text_color = 'white', text_font = ('Bahnschrift SemiLight',23,'bold')) #Ebrima
     myprofile.place(x=20,y=15)
 
-    acct_info = customtkinter.CTkButton(prof,
-                         width = 15,
-                         height = 10,
-                         fg_color = '#101010',
-                         text = 'Account Info',
-                         text_color = 'white',
-                         text_font = ('Bahnschrift SemiLight',17,'bold'),
-                          hover_color = '#101010',
-                          command=details_clicked)
+    acct_info = customtkinter.CTkButton(prof, width = 15, height = 10, fg_color = '#101010', text = 'Account Info', text_color = 'white', text_font = ('Bahnschrift SemiLight',17,'bold'), hover_color = '#101010', command=details_clicked)
     acct_info.place(x=550,y=155)
 
-    other = customtkinter.CTkButton(prof,
-                         width = 15,
-                         height = 10,
-                         fg_color = '#101010',
-                         bg_color = '#101010',
-                         text = 'Other Handles',
-                         text_color = 'silver',
-                         text_font = ('Bahnschrift SemiLight',17,'bold'),
-                         hover_color = '#101010',
-                      command = other_handles_clicked)
+    other = customtkinter.CTkButton(prof, width = 15, height = 10, fg_color = '#101010', bg_color = '#101010', text = 'Other Handles', text_color = 'silver', text_font = ('Bahnschrift SemiLight',17,'bold'), hover_color = '#101010', command = other_handles_clicked)
     other.place(x=900,y=155)
 
-    #the bar on top of chosen tab
-    bar = tkinter.Canvas(prof,
-                 width = 150,
-                 height = 10,
-                 bg = '#101010',
-                 highlightbackground = '#101010',
-                 highlightthickness = 1)
+    bar = tkinter.Canvas(prof, width = 150, height = 10, bg = '#101010', highlightbackground = '#101010', highlightthickness = 1)
     bar.place(x= 550, y = 150)
     bar.create_line(2,2,150,2,fill='#7df9ff',width = 3)
 
-    acctframe = customtkinter.CTkFrame(prof,
-                         width = 800,
-                         height = 400,
-                         fg_color = '#101010')
+    acctframe = customtkinter.CTkFrame(prof, width = 800, height = 400, fg_color = '#101010')
     acctframe.place(x=375,y = 200)
-
-
-##
-##    masterFrame = customtkinter.CTkFrame(app, width = 1100, height = 500)
-##    masterFrame.place(x = 250, y = 160)
-##
 
     profilePicturePath = "ProfilePictures/" + str(functions_chat.CurrentUserID) + ".png"
     profilePicture = ImageTk.PhotoImage(Image.open(profilePicturePath).resize((300,300)))
@@ -445,15 +356,8 @@ def user_profile():
     pictureLabel.image = profilePicture
     pictureLabel.place(x =150, y = 200)
 
-    edit_icon = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\edit.png').resize((25,25)))
-    change = customtkinter.CTkButton(prof,
-                       width = 10,
-                       image = edit_icon,
-                       text = '',
-                       fg_color = '#0d98ba',
-                       bg_color = '#0d98ba',
-                       corner_radius = 15,
-                       command = changeFile)
+    edit_icon = ImageTk.PhotoImage(Image.open('ImageResources/edit.png').resize((25,25)))
+    change = customtkinter.CTkButton(prof, width = 10, image = edit_icon, text = '', fg_color = '#0d98ba', bg_color = '#0d98ba', corner_radius = 15, command = changeFile)
     change.place(x= 350,y = 100)
     
 
@@ -479,8 +383,6 @@ def user_profile():
         global abt
         global aboutlabel
         functions_chat.update_bio(aboutStr)
-##        for widget in aboutFrame.winfo_children():
-##            widget.destroy()
         abt.destroy()
         aboutEditButton.configure(text = 'Edit', command=about_edit)
         aboutlabel = customtkinter.CTkLabel(aboutFrame,text = functions_chat.get_bio(functions_chat.CurrentUserID)[1])
@@ -491,14 +393,6 @@ def user_profile():
     def about_edit():
         global abt
         global aboutlabel
-##        for widget in aboutFrame.winfo_children():
-##            widget.destroy()
-        
-##        aboutFrame.place(x=745, y=50)
-##
-##        aboutme = customtkinter.CTkLabel(aboutFrame, text='About Me', text_color='white', width=40, text_font=('Uni Sans', 13))
-##        aboutme.place(x=10, y=5)
-
         aboutEditButton.configure(text = 'Done', command = lambda: execute_about_edit(abt.get("1.0")))
         aboutlabel.destroy()
 
@@ -515,68 +409,26 @@ def user_profile():
         global editProfileButton
         credentials = functions_chat.get_user(functions_chat.email)
         
-        emailent = customtkinter.CTkLabel(acctframe,
-
-                            height = 27,
-                            fg_color = '#151515',
-                            text = credentials[1],               
-                            corner_radius = 15,
-                            text_font = ('Bahnschrift SemiLight',18),
-                            justify = 'left')
+        emailent = customtkinter.CTkLabel(acctframe, height = 27, fg_color = '#151515', text = credentials[1], corner_radius = 15, text_font = ('Bahnschrift SemiLight',18), justify = 'left')
         emailent.place(x=60,y=100)
 
-        email = customtkinter.CTkLabel(acctframe,
-                         width=20,
-                         height=7,
-                         text='Email ID',
-                         text_font = ('smth',18,'bold'))
+        email = customtkinter.CTkLabel(acctframe, width=20, height=7, text='Email ID', text_font = ('smth',18,'bold'))
         email.place(x=75, y = 65)
 
-        unent = customtkinter.CTkLabel(acctframe,
-
-                            height = 27,
-                            fg_color = '#151515',
-                            text = credentials[2],           
-                            corner_radius = 15,
-                         text_font = ('Bahnschrift SemiLight',18),
-                                       justify = 'left')
+        unent = customtkinter.CTkLabel(acctframe, height = 27, fg_color = '#151515', text = credentials[2], corner_radius = 15, text_font = ('Bahnschrift SemiLight',18), justify = 'left')
         unent.place(x=60,y=200)
 
 
-        un = customtkinter.CTkLabel(acctframe,
-                      width=10,
-                      height=7,
-                      text='Username',
-                      text_font = ('smth',18,'bold'))
+        un = customtkinter.CTkLabel(acctframe, width=10, height=7, text='Username', text_font = ('smth',18,'bold'))
         un.place(x=75, y = 165)
 
-        pwent = customtkinter.CTkLabel(acctframe,
-
-                            height = 27,
-                            fg_color = '#151515',
-                            text = '****',           
-                            corner_radius = 15,
-                         text_font = ('Bahnschrift SemiLight',18),
-                                       justify = 'left')
+        pwent = customtkinter.CTkLabel(acctframe, height = 27, fg_color = '#151515', text = '****', corner_radius = 15, text_font = ('Bahnschrift SemiLight',18), justify = 'left')
         pwent.place(x=60,y=300)
 
-        pw = customtkinter.CTkLabel(acctframe,
-                      width=20,
-                      height=7,
-                      text='Password',
-                      text_font = ('smth',18,'bold'))
+        pw = customtkinter.CTkLabel(acctframe, width=20, height=7, text='Password', text_font = ('smth',18,'bold'))
         pw.place(x=75, y = 265)
 
-        editProfileButton = customtkinter.CTkButton(prof,
-                         width = 725,
-                         text = 'Edit account details',
-                         text_font = ('uni sans',14),
-                         corner_radius = 15,
-                         border_width = 1,
-                         border_color = '#0d98ba',
-                         fg_color = '#151515',
-                         hover_color = '#0d98ba',
-                         command=lambda: details_edit(acctframe))
+        editProfileButton = customtkinter.CTkButton(prof, width = 725, text = 'Edit account details', text_font = ('uni sans',14), corner_radius = 15, border_width = 1, border_color = '#0d98ba', fg_color = '#151515', hover_color = '#0d98ba', command=lambda: details_edit(acctframe))
         editProfileButton.place(x=450, y = 550)
 
     def execute_socials_edit(facebook,instagram,spotify,youtube):
@@ -595,99 +447,40 @@ def user_profile():
         for widget in acctframe.winfo_children():
             widget.destroy()
 
-        bio = functions_chat.get_bio(CurrentUserID)
+        bio = functions_chat.get_bio(functions_chat.CurrentUserID)
             
-        fbent = customtkinter.CTkEntry(acctframe,
-                            width = 645,
-                            height = 25,
-                            fg_color = '#292929',
-                            border_width= 1,
-                            placeholder_text= 'Facebook profile',
-                            placeholder_text_color = 'silver',
-                         text_font = ('uni sans',15),
-                            corner_radius = 5,
-                            text_color = 'silver')
-        fbent.insert(0,bio[4])
+        fbent = customtkinter.CTkEntry(acctframe, width = 645, height = 25, fg_color = '#292929', border_width= 1, placeholder_text= 'Facebook profile', placeholder_text_color = 'silver', text_font = ('uni sans',15), corner_radius = 5, text_color = 'silver')
+        fbent.insert(0, bio[4])
         fbent.place(x=100,y=50)
-        fb = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\fb.png').resize((40,40)))
+        fb = ImageTk.PhotoImage(Image.open('ImageResources/fb.png').resize((40,40)))
 
-        facebook = customtkinter.CTkButton(acctframe,
-                      width = 20,
-                      height = 20,
-                      image = fb,
-                      text = '',
-                      fg_color = '#151515')
+        facebook = customtkinter.CTkButton(acctframe, width = 20, height = 20, image = fb, text = '', fg_color = '#151515')
         facebook.place(x=760,y = 40)
 
-        igent = customtkinter.CTkEntry(acctframe,
-                            width = 645,
-                            height = 25,
-                            fg_color = '#292929',
-                            border_width= 1,
-                            placeholder_text= 'Instagram profile',
-                         text_font = ('uni sans',15),
-                            placeholder_text_color = 'silver',
-                            corner_radius = 5,
-                            text_color = 'silver')
+        igent = customtkinter.CTkEntry(acctframe, width = 645, height = 25, fg_color = '#292929', border_width= 1, placeholder_text= 'Instagram profile', text_font = ('uni sans',15), placeholder_text_color = 'silver', corner_radius = 5, text_color = 'silver')
         igent.insert(0,bio[2])
         igent.place(x=100,y=100)
-        insta = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\insta.png').resize((40,40)))
+        insta = ImageTk.PhotoImage(Image.open('ImageResources/insta.png').resize((40,40)))
 
-        instagram = customtkinter.CTkButton(acctframe,
-                              width = 20,
-                              height = 20,
-                              image = insta,
-                              text = '',
-                              fg_color = '#151515',
-                             hover_color = '#151515')
+        instagram = customtkinter.CTkButton(acctframe, width = 20, height = 20, image = insta, text = '', fg_color = '#151515', hover_color = '#151515')
         instagram.place(x=760,y =90)
 
 
-        ytent = customtkinter.CTkEntry(acctframe,
-                            width = 645,
-                            height = 25,
-                            fg_color = '#292929',
-                            border_width= 1,
-                            placeholder_text= 'YouTube channel',
-                         text_font = ('uni sans',15),
-                            placeholder_text_color = 'silver',
-                            corner_radius = 5,
-                            text_color = 'silver')
+        ytent = customtkinter.CTkEntry(acctframe, width = 645, height = 25, fg_color = '#292929', border_width= 1, placeholder_text= 'YouTube channel', text_font = ('uni sans',15), placeholder_text_color = 'silver', corner_radius = 5, text_color = 'silver')
         ytent.insert(0,bio[5])
         ytent.place(x=100,y=150)
-        yt = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\yt.png').resize((40,40)))
+        yt = ImageTk.PhotoImage(Image.open('ImageResources/yt.png').resize((40,40)))
 
-        youtube = customtkinter.CTkButton(acctframe,
-                              width = 20,
-                              height = 20,
-                              image = yt,
-                              text = '',
-                            fg_color = '#151515')
+        youtube = customtkinter.CTkButton(acctframe, width = 20, height = 20, image = yt, text = '', fg_color = '#151515')
         youtube.place(x=760,y = 140)
 
 
-        spotifyent = customtkinter.CTkEntry(acctframe,
-                            width = 645,
-                            height = 25,
-                            fg_color = '#292929',
-                            border_width= 1,
-                            placeholder_text= 'Spotify account',
-                         text_font = ('uni sans',15),
-                            placeholder_text_color = 'silver',
-                            corner_radius = 5,
-                            text_color = 'silver')
+        spotifyent = customtkinter.CTkEntry(acctframe, width = 645, height = 25, fg_color = '#292929', border_width= 1, placeholder_text= 'Spotify account', text_font = ('uni sans',15), placeholder_text_color = 'silver', corner_radius = 5, text_color = 'silver')
         spotifyent.insert(0,bio[3])
         spotifyent.place(x=100,y=200)
-        tw = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\twitter.png').resize((40,40)))
+        tw = ImageTk.PhotoImage(Image.open('ImageResources/twitter.png').resize((40,40)))
 
-        twitter = customtkinter.CTkButton(acctframe,
-                              width = 20,
-                              height = 20,
-                              image = tw,
-                              text = '',
-                              fg_color = '#151515',
-                            text_font = ('uni sans',15),
-                             hover_color = '#151515')
+        twitter = customtkinter.CTkButton(acctframe, width = 20, height = 20, image = tw, text = '', fg_color = '#151515', text_font = ('uni sans',15), hover_color = '#151515')
         twitter.place(x=760,y = 190)
 
 
@@ -695,110 +488,49 @@ def user_profile():
     about()
     details()
     mode()
-    #log_out(masterFrame)
+
     def other_handles():
         global editmedia
-        bio = functions_chat.get_bio(CurrentUserID)    
+        bio = functions_chat.get_bio(functions_chat.CurrentUserID)    
   
-        fbent = customtkinter.CTkLabel(acctframe,
-                            width = 645,
-                            height = 25,
-                            fg_color = '#292929',
-                         text_font = ('uni sans',15),
-                            corner_radius = 5,
-                            text_color = 'silver',
-                                       text=bio[4])
+        fbent = customtkinter.CTkLabel(acctframe, width = 645, height = 25, fg_color = '#292929', text_font = ('uni sans',15), corner_radius = 5, text_color = 'silver', text=bio[4])
 
         fbent.place(x=100,y=50)
-        fb = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\fb.png').resize((40,40)))
+        fb = ImageTk.PhotoImage(Image.open('ImageResources/fb.png').resize((40,40)))
 
-        facebook = customtkinter.CTkButton(acctframe,
-                      width = 20,
-                      height = 20,
-                      image = fb,
-                      text = '',
-                      fg_color = '#151515')
+        facebook = customtkinter.CTkButton(acctframe, width = 20, height = 20, image = fb, text = '', fg_color = '#151515')
         facebook.place(x=760,y = 40)
 
-        igent = customtkinter.CTkLabel(acctframe,
-                            width = 645,
-                            height = 25,
-                            fg_color = '#292929',
-                         text_font = ('uni sans',15),
-                            corner_radius = 5,
-                            text_color = 'silver',
-                                       text=bio[2])
+        igent = customtkinter.CTkLabel(acctframe, width = 645, height = 25, fg_color = '#292929', text_font = ('uni sans',15), corner_radius = 5, text_color = 'silver', text=bio[2])
 
         igent.place(x=100,y=100)
-        insta = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\insta.png').resize((40,40)))
+        insta = ImageTk.PhotoImage(Image.open('ImageResources/insta.png').resize((40,40)))
 
-        instagram = customtkinter.CTkButton(acctframe,
-                              width = 20,
-                              height = 20,
-                              image = insta,
-                              text = '',
-                              fg_color = '#151515',
-                             hover_color = '#151515')
+        instagram = customtkinter.CTkButton(acctframe, width = 20, height = 20, image = insta, text = '', fg_color = '#151515', hover_color = '#151515')
         instagram.place(x=760,y =90)
 
 
-        ytent = customtkinter.CTkLabel(acctframe,
-                            width = 645,
-                            height = 25,
-                            fg_color = '#292929',
-                         text_font = ('uni sans',15),
-                            corner_radius = 5,
-                            text_color = 'silver',
-                                       text=bio[5])
-
-        ytent.place(x=100,y=150)
-        yt = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\yt.png').resize((40,40)))
-
-        youtube = customtkinter.CTkButton(acctframe,
-                              width = 20,
-                              height = 20,
-                              image = yt,
-                              text = '',
-                            fg_color = '#151515')
-        youtube.place(x=760,y = 140)
+        #ytent = customtkinter.CTkLabel(acctframe, width = 645, height = 25, fg_color = '#292929', text_font = ('uni sans',15), corner_radius = 5, text_color = 'silver', text=bio[5])
+        #ytent.place(x=100,y=150)
+        #yt = ImageTk.PhotoImage(Image.open('ImageResources/yt.png').resize((40,40)))
+        #youtube = customtkinter.CTkButton(acctframe, width = 20, height = 20, image = yt, text = '', fg_color = '#151515')
+        #youtube.place(x=760,y = 140)
 
 
-        spotifyent = customtkinter.CTkLabel(acctframe,
-                            width = 645,
-                            height = 25,
-                            fg_color = '#292929',
-                            corner_radius = 5,
-                            text_color = 'silver',
-                            text=bio[3])
+        spotifyent = customtkinter.CTkLabel(acctframe, width = 645, height = 25, fg_color = '#292929', corner_radius = 5, text_color = 'silver', text=bio[3])
 
         spotifyent.place(x=100,y=200)
-        tw = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\twitter.png').resize((40,40)))
+        tw = ImageTk.PhotoImage(Image.open('ImageResources/twitter.png').resize((40,40)))
 
-        twitter = customtkinter.CTkButton(acctframe,
-                              width = 20,
-                              height = 20,
-                              image = tw,
-                              text = '',
-                              fg_color = '#151515',
-                            text_font = ('uni sans',15),
-                             hover_color = '#151515')
+        twitter = customtkinter.CTkButton(acctframe, width = 20, height = 20, image = tw, text = '', fg_color = '#151515', text_font = ('uni sans',15), hover_color = '#151515')
         twitter.place(x=760,y = 190)
 
-        editmedia = customtkinter.CTkButton(prof,
-                         width = 750,
-                         text = 'Edit media handles',
-                         corner_radius = 15,
-                         border_width = 1,
-                         border_color = '#0d98ba',
-                         text_font = ('uni sans',14),
-                         fg_color = '#151515',
-                         hover_color = '#0d98ba',
-                         command=other_handles_edit)
+        editmedia = customtkinter.CTkButton(prof, width = 750, text = 'Edit media handles', corner_radius = 15, border_width = 1, border_color = '#0d98ba', text_font = ('uni sans',14), fg_color = '#151515', hover_color = '#0d98ba', command=other_handles_edit)
         editmedia.place(x=450, y = 550)
         
     about()
     details()
-    mode()
+    #mode()
 
 def add_dms():
 
@@ -813,42 +545,18 @@ def add_dms():
         profilePicture = ImageTk.PhotoImage(Image.open(profilePicturePath).resize((350,350)))
         pictureLabel = customtkinter.CTkLabel(resultframe, image=profilePicture)
         pictureLabel.image = profilePicture
+        
+        username = customtkinter.CTkLabel(resultframe, width = 40, height = 10, text = user[2], fg_color = '#101010', text_color = 'White', text_font = ('Gill Sans MT',40))
+        aboutMeLabel = customtkinter.CTkLabel(resultframe, width = 40, height = 10, text = 'About Me', fg_color = '#101010', text_color = 'light gray', text_font = ('Calibri',20, 'bold'))
+        aboutMe = customtkinter.CTkLabel(resultframe, width = 40, height = 10, text = bio[1], fg_color = '#101010', text_color = 'light gray', text_font = ('Calibri',19), justify = 'left')
+        lineCanvas = tkinter.Canvas(resultframe, width = 550, height = 20, bg = '#101010', highlightbackground = '#101010', highlightthickness = 1)
+        
         pictureLabel.place(x=975,y = 0)
-        username = customtkinter.CTkLabel(resultframe,
-                          width = 40,
-                          height = 10,
-                          text = user[2],
-                          fg_color = '#101010',
-                          text_color = 'White',
-                          text_font = ('Gill Sans MT',40))
-        username.place(x=90,y=50)
-
-        aboutme = customtkinter.CTkLabel(resultframe,
-                          width = 40,
-                          height = 10,
-                          text = '[About Me]',
-                          fg_color = '#101010',
-                          text_color = 'light gray',
-                          text_font = ('Calibri',20))
-        aboutme.place(x=85,y=140)
-
-        desc = customtkinter.CTkLabel(resultframe,
-                          width = 40,
-                          height = 10,
-                          text = bio[1],
-                          fg_color = '#101010',
-                          text_color = 'light gray',
-                          text_font = ('Calibri',19),
-                          justify = 'left')
-        desc.place(x=85,y=175)
-        canvas2 = tkinter.Canvas(resultframe,
-                        width = 550,
-                        height = 20,
-                        bg = '#101010',
-                        highlightbackground = '#101010',
-                        highlightthickness = 1)
-        canvas2.place(x= 850, y = 460)
-        canvas2.create_line(2,2,550,2,fill='#d24e01',width = 2)
+        username.place(x=90,y=50)        
+        aboutMeLabel.place(x=85,y=140)
+        aboutMe.place(x=85,y=175)
+        lineCanvas.place(x= 850, y = 460)
+        lineCanvas.create_line(2,2,550,2,fill='#d24e01',width = 2)
 
         def add_friend():
             functions_chat.new_dm(user[0])
@@ -856,195 +564,66 @@ def add_dms():
             warningLabel.configure(text = 'added friend')
 
         
-        friendButton = customtkinter.CTkButton(resultframe,
-                           width = 70,
-                           height = 20,
-                           corner_radius = 15,
-                           text = '     Friend     ',
-                           text_font = ('uni sans',18),
-                           fg_color = '#101010',
-                           text_color = 'white',
-                           hover_color = '#ff4800',
-                           border_width = 1,
-                           border_color = '#ff4800',
-                           command=add_friend,
-                           state = 'normal',
-                           text_color_disabled='silver'	)
-        friendButton.place(x=1200,y=415)
-
+        friendButton = customtkinter.CTkButton(resultframe, width = 70, height = 20, corner_radius = 15, text = '     Friend     ', text_font = ('uni sans',18), fg_color = '#101010', text_color = 'white', hover_color = '#ff4800', border_width = 1, border_color = '#ff4800', command=add_friend, state = 'normal', text_color_disabled='silver')
         warningLabel = customtkinter.CTkLabel(resultframe, text = '', anchor='w', justify='left')
-##        usernameTitleLabel.place(x = 300, y = 75)
-##        usernameLabel.place(x = 300, y = 110)
-##        bioTitleLabel.place(x = 300, y = 180)
-##        bioLabel.place(x = 300, y = 215)
-##        addFriendButton.place(x = 300, y = 300)
+        messageButton = customtkinter.CTkButton(resultframe, width = 35, height = 10, corner_radius = 15, text = '   Message   ', text_font = ('uni sans',18), fg_color = '#101010', text_color = 'white', hover_color = '#ff4800', border_width = 1, border_color = '#ff4800')    
+
+        messageButton.place(x=1000,y=415)
+        friendButton.place(x=1200,y=415)
         warningLabel.place(x = 1225, y = 465)
+
         friends = functions_chat.get_dm_users()
         for friend in friends:
             if friend[0] == user[0]:
                 friendButton.configure(state = 'disabled')
                 warningLabel.configure(text = 'User is already your friend',text_color = 'red')
+            if friend[0] == int(functions_chat.CurrentUserID):
+                friendButton.configure(state = 'disabled')
+                warningLabel.configure(text = 'You cannot friend yourself',text_color = 'red')
 
-        message = customtkinter.CTkButton(resultframe,
-                           width = 35,
-                           height = 10,
-                           corner_radius = 15,
-                           text = '   Message   ',
-                            text_font = ('uni sans',18),
-                           fg_color = '#101010',
-                           text_color = 'white',
-                           hover_color = '#ff4800',
-                           border_width = 1,
-                           border_color = '#ff4800')
-        message.place(x=1000,y=415)    
-
-        insta = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\insta.png').resize((40,40)))
-
-        instagram = customtkinter.CTkButton(resultframe,
-                              width = 20,
-                              height = 20,
-                              image = insta,
-                              text = '',
-                              fg_color = '#101010',
-                             hover_color = '#101010')
+        instagramIcon = ImageTk.PhotoImage(Image.open('ImageResources/insta.png').resize((40,40)))
+        instagram = customtkinter.CTkButton(resultframe, width = 20, height = 20, image = instagramIcon, text = '', fg_color = '#101010', hover_color = '#101010')
         instagram.place(x=450,y = 500)
 
-        fb = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\fb.png').resize((40,40)))
-
-        facebook = customtkinter.CTkButton(resultframe,
-                              width = 20,
-                              height = 20,
-                              image = fb,
-                              text = '',
-                              fg_color = '#101010',
-                             hover_color = '#101010')
+        facebookIcon = ImageTk.PhotoImage(Image.open('ImageResources/fb.png').resize((40,40)))
+        facebook = customtkinter.CTkButton(resultframe, width = 20, height = 20, image = facebookIcon, text = '', fg_color = '#101010', hover_color = '#101010')
         facebook.place(x=600,y = 500)
 
-        yt = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\yt.png').resize((40,40)))
-
-        youtube = customtkinter.CTkButton(resultframe,
-                              width = 20,
-                              height = 20,
-                              image = yt,
-                              text = '',
-                              fg_color = '#101010',
-                             hover_color = '#101010')
+        youtubeIcon = ImageTk.PhotoImage(Image.open('ImageResources/yt.png').resize((40,40)))
+        youtube = customtkinter.CTkButton(resultframe, width = 20, height = 20, image = youtubeIcon, text = '', fg_color = '#101010', hover_color = '#101010')
         youtube.place(x=750,y = 500)
 
-        tw = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\twitter.png').resize((40,40)))
-
-        twitter = customtkinter.CTkButton(resultframe,
-                              width = 20,
-                              height = 20,
-                              image = tw,
-                              text = '',
-                              fg_color = '#101010',
-                             hover_color = '#101010')
+        twitterIcon = ImageTk.PhotoImage(Image.open('ImageResources/twitter.png').resize((40,40)))
+        twitter = customtkinter.CTkButton(resultframe, width = 20, height = 20, image = twitterIcon, text = '', fg_color = '#101010', hover_color = '#101010')
         twitter.place(x=900,y = 500)
 
     
-    friend_mainframe = customtkinter.CTkFrame(app,
-                            width = 1600,
-                            height = 900,
-                                fg_color = 'blue',
-                                corner_radius = 0)
+    friend_mainframe = customtkinter.CTkFrame(app, width = 1600, height = 900, fg_color = 'blue', corner_radius = 0)
+    blacklabel = customtkinter.CTkLabel(friend_mainframe, width=1600, height = 600, fg_color = '#151515', corner_radius = 0, text = '')
+    orangelabel = customtkinter.CTkLabel(friend_mainframe, width=1600, height = 300, fg_color = '#d24e01', text = '', corner_radius = 0)
+    heading = customtkinter.CTkLabel(friend_mainframe, width = 20, text = 'Friends', fg_color = '#151515', text_color = '#e8e7ea', text_font = ('Calibri', 50))
+    add_friend = customtkinter.CTkFrame(friend_mainframe, width = 1400, height = 700, fg_color = '#101010', corner_radius = 0)
+    userSearchEntry = customtkinter.CTkEntry(add_friend, width = 725, height = 35, corner_radius = 10, placeholder_text = 'Enter email', placeholder_text_color = 'gray', text_font = ('georgia',11), fg_color = '#101010', border_width = 0)
+    canvas = tkinter.Canvas(add_friend, width = 730, height = 10, bg = '#101010', highlightbackground = '#101010', highlightthickness = 1)
+
     friend_mainframe.grid(row = 0, column = 0, columnspan = 5, sticky = 'nsew')
-    
-
-    toplabel = customtkinter.CTkLabel(friend_mainframe,
-                        width=1600,
-                        height = 600,
-                        fg_color = '#151515',
-                        corner_radius = 0,
-                        text = '')
     toplabel.place(x=0,y=0)
-
-    bottomlabel = customtkinter.CTkLabel(friend_mainframe,
-                        width=1600,
-                        height = 300,
-                        fg_color = '#d24e01',
-                           text = '',
-                        corner_radius = 0)
     bottomlabel.place(x=0, y = 600 )
-
-
-    heading = customtkinter.CTkLabel(friend_mainframe,
-                       width = 20,
-                       text = 'Friends',
-                       fg_color = '#151515',
-                       text_color = '#e8e7ea',
-                       text_font = ('Calibri', 50))
     heading.place(x=35, y = 10)
-
-    add_friend = customtkinter.CTkFrame(friend_mainframe,
-                          width = 1400,
-                          height = 700,
-                          fg_color = '#101010',
-                          corner_radius = 0)
-    add_friend.place(x=100, y = 100)
-            
-    userSearchEntry = customtkinter.CTkEntry(add_friend,
-                        width = 725,
-                        height = 35,
-                        corner_radius = 10,
-                        placeholder_text = 'Enter email',
-                        placeholder_text_color = 'gray',
-                        text_font = ('georgia',11),
-                        fg_color = '#101010',
-                        border_width = 0)
+    add_friend.place(x=100, y = 100)        
     userSearchEntry.place(x=35, y = 75)
-
-    canvas = tkinter.Canvas(add_friend,
-                    width = 730,
-                    height = 10,
-                    bg = '#101010',
-                    highlightbackground = '#101010',
-                    highlightthickness = 1)
     canvas.place(x=33, y = 113)
     canvas.create_line(2,2,727,2,fill='#d24e01')
 
-    
-
-    searchimage = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\search.png').resize((25,25)))
-    addsearch = customtkinter.CTkButton(add_friend,
-                          width = 25,
-                          height = 10,
-                          image = searchimage,
-                          text = '',
-                          fg_color = '#101010',
-                          hover_color = '#101010',
-                          command = search)
+    searchimage = ImageTk.PhotoImage(Image.open('ImageResources/search.png').resize((25,25)))
+    addsearch = customtkinter.CTkButton(add_friend, width = 25, height = 10, image = searchimage, text = '', fg_color = '#101010', hover_color = '#101010', command = search)
     addsearch.place(x=725,y = 73)
-    resultframe = customtkinter.CTkFrame(add_friend,
-                           width = 1400,
-                           height = 550,
-                           fg_color = '#101010')
+    resultframe = customtkinter.CTkFrame(add_friend, width = 1400, height = 550, fg_color = '#101010')
     resultframe.place(x=0,y=150)
-    msg = customtkinter.CTkLabel(resultframe,
-                   text = 'Find new friends',
-                   fg_color = '#101010',
-                   text_color = 'gray',
-                   text_font = ('inter',22))
+    msg = customtkinter.CTkLabel(resultframe, text = 'Find new friends', fg_color = '#101010', text_color = 'gray', text_font = ('inter',22))
     msg.place(x=600,y=200)
 
-        
-
-
     app.columnconfigure(0, weight = 1)
-##    masterFrame = customtkinter.CTkFrame(app)
-##    masterFrame.grid(row = 0, column = 0, columnspan = 5, sticky = 'nsew')
-##    bg = customtkinter.CTkFrame(masterFrame, height=200, width=2000, border=0, fg_color='purple')  # 003366 #ec4d37
-##    addFriendsLabel = customtkinter.CTkLabel(bg, text='Add Friends', text_font=('Uni Sans', 30, 'bold'))
-##    userInfoFrame = customtkinter.CTkFrame(masterFrame, width = 800, height = 400)
-##    userSearchEntry = customtkinter.CTkEntry(masterFrame, width = 600, height = 40, placeholder_text='Enter email')
-##    searchButton = customtkinter.CTkButton(app, text='Search', command=search, width = 190, height = 40)
-##    messageLabel = customtkinter.CTkLabel(userInfoFrame, text = 'Find new friends', text_font=('Uni Sans', 20), width = 200, justify = 'center')
-##    messageLabel.place(x = 300, y = 200)
-##    userInfoFrame.place(x = 400, y = 160)
-##    userSearchEntry.place(x = 400, y = 610)
-##    searchButton.place(x = 1010, y = 610)
-##    bg.place(x=0, y=0)
-##    addFriendsLabel.place(x=250, y=80)
 
 
 def rate_us():
@@ -1064,90 +643,40 @@ def rate_us():
     rateus.title('Feedback form')
 
 
-    rateimg = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\rate.png').resize((100,100)))
-    rateimglabel = customtkinter.CTkLabel(rateus,
-                            width = 100,
-                            height = 100,
-                            text = '',
-                            image = rateimg)
+    rateimg = ImageTk.PhotoImage(Image.open('ImageResources/rate.png').resize((100,100)))
+    rateimglabel = customtkinter.CTkLabel(rateus, width = 100, height = 100, text = '', image = rateimg)
     rateimglabel.place(x=150,y = 15)
-    ratelabel = customtkinter.CTkLabel(rateus,
-                         text = 'Enjoying Discard?',
-                         text_font = ('uni sans', 15, 'bold'))
+    ratelabel = customtkinter.CTkLabel(rateus, text = 'Enjoying Discard?', text_font = ('uni sans', 15, 'bold'))
     ratelabel.place(x=115, y = 125)
-    rate_sublabel = customtkinter.CTkLabel(rateus,
-                             height = 10,
-                             text = 'Rate your experience so far.',
-                             text_color = 'gray',
-                             text_font = ('uni sans', 10))
+    rate_sublabel = customtkinter.CTkLabel(rateus, height = 10, text = 'Rate your experience so far.', text_color = 'gray', text_font = ('uni sans', 10))
     rate_sublabel.place(x=117, y = 150)
-    rateframe = customtkinter.CTkFrame(rateus,
-                         fg_color = '#292929',
-                         width = 350,
-                         height = 75)
+    rateframe = customtkinter.CTkFrame(rateus, fg_color = '#292929', width = 350, height = 75)
     rateframe.place(x=25,y=200)
 
-    slider = customtkinter.CTkSlider(rateframe,
-                       from_=0,
-                       to=5,
-                       number_of_steps = 5,
-                       width = 250,
-                       button_color = 'sky blue')
+    slider = customtkinter.CTkSlider(rateframe, from_=0, to=5, number_of_steps = 5, width = 250, button_color = 'sky blue')
     slider.place(x=50, y = 30)
     slider.set(0)
 
-    smiley = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\smiley.png').resize((40,40)))
-    smileylabel = customtkinter.CTkLabel(rateframe,
-                            width = 15,
-                            height = 15,
-                            text = '',
-                            image = smiley)
+    smiley = ImageTk.PhotoImage(Image.open('ImageResources/smiley.png').resize((40,40)))
+    smileylabel = customtkinter.CTkLabel(rateframe, width = 15, height = 15, text = '', image = smiley)
     smileylabel.place(x=7,y =17)
-    sad = ImageTk.PhotoImage(Image.open(r'C:\Users\ajnil\Downloads\Chat-app-master\Chat-app-master\ImageResources_new\ImageResources\sad.png').resize((43,43)))
-    sadlabel = customtkinter.CTkLabel(rateframe,
-                            width = 15,
-                            height = 15,
-                            text = '',
-                            image = sad)
+    sad = ImageTk.PhotoImage(Image.open('ImageResources/sad.png').resize((43,43)))
+    sadlabel = customtkinter.CTkLabel(rateframe, width = 15, height = 15, text = '', image = sad)
     sadlabel.place(x=300,y = 15)
 
 
-    feedbacklabel = customtkinter.CTkLabel(rateus,
-                         text = 'Care to share more?',
-                         text_font = ('uni sans', 14, 'bold'),
-                         justify = 'left')
+    feedbacklabel = customtkinter.CTkLabel(rateus, text = 'Care to share more?', text_font = ('uni sans', 14, 'bold'), justify = 'left')
     feedbacklabel.place(x=25, y = 300)
-    feedback_sublabel = customtkinter.CTkLabel(rateus,
-                             height = 10,
-                             text = 'Let us know how we can improve.',
-                             text_color = 'gray',
-                             text_font = ('uni sans', 10),
-                             justify = 'left')
+    feedback_sublabel = customtkinter.CTkLabel(rateus, height = 10, text = 'Let us know how we can improve.', text_color = 'gray', text_font = ('uni sans', 10), justify = 'left')
     feedback_sublabel.place(x=25, y = 325)
 
     
-    feedbackframe = customtkinter.CTkFrame(rateus,
-                         fg_color = '#292929',
-                         width = 350,
-                         height = 200)
+    feedbackframe = customtkinter.CTkFrame(rateus, fg_color = '#292929', width = 350, height = 200)
     feedbackframe.place(x=25,y=355)
-    feedbackTextbox = tkinter.Text(feedbackframe,
-                        width = 42,
-                        height = 11,
-                        bg= '#292929',
-                        fg = 'white',
-                    bd = 0)
+    feedbackTextbox = tkinter.Text(feedbackframe, width = 42, height = 11, bg= '#292929', fg = 'white', bd = 0)
     feedbackTextbox.place(x=5,y=5)
 
-    cancel = customtkinter.CTkButton(rateus,
-                       width = 150,
-                       text = 'Cancel',
-                       text_color = 'red',
-                       border_color = 'red',
-                       corner_radius = 5,
-                       border_width = 1,
-                       fg_color = '#202020',
-                       command = rateus.destroy)
+    cancel = customtkinter.CTkButton(rateus, width = 150, text = 'Cancel', text_color = 'red', border_color = 'red', corner_radius = 5, border_width = 1, fg_color = '#202020', command = rateus.destroy)
     cancel.place(x = 25, y = 565)
     submit = customtkinter.CTkButton(rateus,
                        width = 150,
