@@ -269,24 +269,6 @@ def user_profile():
     masterFrame = customtkinter.CTkFrame(app, width = 1100, height = 500)
     masterFrame.place(x = 250, y = 160)
 
-    def Edit(win, det, a, b):
-        edit = customtkinter.CTkButton(win, width=20, height=20, text='Edit', fg_color='teal', text_color='white', hover_color='teal', command=lambda: edit_clicked(det))
-        edit.place(x=a, y=b)
-
-        def edit_clicked(entry):
-            nonlocal edit
-            fl = True
-            if fl:
-                edit.configure(text='Done')
-                entry.configure(state='normal')
-
-            def edit_clicked_twice():
-                nonlocal edit
-                nonlocal det
-                edit.configure(text='Edit')
-                entry.configure(state='disabled')
-            edit.configure(command=edit_clicked_twice)
-
     profilePicturePath = "ProfilePictures/" + str(functions_chat.CurrentUserID) + ".png"
     profilePicture = ImageTk.PhotoImage(Image.open(profilePicturePath).resize((250, 250)))
     pictureLabel = customtkinter.CTkLabel(masterFrame, image=profilePicture)
@@ -429,7 +411,7 @@ def user_profile():
             os.remove('credentials.txt')
             app.destroy()
 
-        lo = Image.open(r"C:\Users\Sanje\Downloads\logout.png")
+        lo = Image.open("ImageResources/logout.png")
         lo_resize = lo.resize((40, 40))
         lo1 = ImageTk.PhotoImage(lo_resize)
         logout = customtkinter.CTkButton(win, width=125, height=50, image=lo1, fg_color='#292929', text='Log Out', compound='top', command = delete)
