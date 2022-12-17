@@ -11,7 +11,6 @@ def create_user(email, name, password, picture):
         values = (email, name, password, picture)
         cursor.execute(command, values)
         userID = cursor.lastrowid
-        print(userID)
         cursor.execute(f"INSERT INTO bio (`user id`) VALUES({userID})")
         mydb.commit()
         logging.info(f"Succesfully created user with email: {email}, user name: {name}, password: {password}")

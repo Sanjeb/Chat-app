@@ -9,6 +9,5 @@ with open('dbconnection.bin', 'rb') as f:
 try:
     mydb = mysql.connector.connect(host = host, user = user, password = password, database = 'mydb')
     cursor = mydb.cursor(buffered=True)
-    print(mydb)
 except:
-    print("Connection lost")
+    ...
