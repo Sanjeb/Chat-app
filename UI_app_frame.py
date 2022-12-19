@@ -333,7 +333,7 @@ def user_profile():
         for widget in acctframe.winfo_children():
             widget.destroy()
         details()
-        editProfileButton.configure(text = 'Edit Account details', command=lambda: details_edit)
+        editProfileButton.configure(text = 'Edit Account details', command=details_edit)
 
     def details_edit():
         nonlocal acctframe
@@ -394,7 +394,7 @@ def user_profile():
         usernameLabel = customtkinter.CTkLabel(acctframe, width=10, height=7, text='Username', text_font = ('smth',18,'bold'))
         passwordEntry = customtkinter.CTkLabel(acctframe, height = 27, fg_color = '#101010', text = '****', corner_radius = 15, text_font = ('Bahnschrift SemiLight',18), justify = 'left', anchor='w')
         passwordLabel = customtkinter.CTkLabel(acctframe, width=20, height=7, text='Password', text_font = ('smth',18,'bold'))
-        editProfileButton = customtkinter.CTkButton(prof, width = 725, text = 'Edit account details', text_font = ('uni sans',14), corner_radius = 15, border_width = 1, border_color = '#0d98ba', fg_color = '#151515', hover_color = '#0d98ba', command=details_edit)
+        editProfileButton = customtkinter.CTkButton(prof, width = 750, text = 'Edit account details', text_font = ('uni sans',14), corner_radius = 15, border_width = 1, border_color = '#0d98ba', fg_color = '#151515', hover_color = '#0d98ba', command=details_edit)
 
         emailEntry.place(x=60,y=100)
         emailLabel.place(x=75, y = 65)
@@ -707,34 +707,38 @@ def mode():
     logoutButton.columnconfigure(0, weight = 1)
 
     chatsPicture = ImageTk.PhotoImage(Image.open('ImageResources/chats.png').resize((35,35)))
-    chatsLabel = customtkinter.CTkLabel(chatMode, image=chatsPicture, width = 35)
+    chatsLabel = tkinter.Label(chatMode, image=chatsPicture, width = 35, bg = '#343638')
     chatsLabel.image = chatsPicture
     chatsLabel.grid(row = 0, column = 0, pady = 5)
 
     friendsPicture = ImageTk.PhotoImage(Image.open('ImageResources/friends.png').resize((35,35)))
-    friendsLabel = customtkinter.CTkLabel(friendsMode, image = friendsPicture, width = 35)
+    friendsLabel = tkinter.Label(friendsMode, image = friendsPicture, width = 35, bg = '#343638')
     friendsLabel.image = friendsPicture
     friendsLabel.grid(row = 0, column = 0, pady = 5)
 
     settingsPicture = ImageTk.PhotoImage(Image.open('ImageResources/settings.png').resize((35,35)))
-    settingsLabel = customtkinter.CTkLabel(settingsMode, image = settingsPicture, width = 35)
+    settingsLabel = tkinter.Label(settingsMode, image = settingsPicture, width = 35, bg = '#343638')
     settingsLabel.image = settingsPicture
     settingsLabel.grid(row = 0, column = 0, pady = 5)
 
     ratePicture = ImageTk.PhotoImage(Image.open('ImageResources/star.png').resize((35,35)))
-    rateLabel = customtkinter.CTkLabel(rateMode, image=ratePicture, width = 35)
+    rateLabel = tkinter.Label(rateMode, image=ratePicture, width = 35, bg = '#343638')
     rateLabel.image = ratePicture
     rateLabel.grid(row = 0, column = 0, pady = 5)
 
     logoutPicture = ImageTk.PhotoImage(Image.open('ImageResources/logout.png').resize((35,35)))
-    logoutLabel = customtkinter.CTkLabel(logoutButton, image=logoutPicture, width = 35)
+    logoutLabel = tkinter.Label(logoutButton, image=logoutPicture, width = 35, bg = '#343638')
     logoutLabel.image = logoutPicture
     logoutLabel.grid(row = 0, column = 0, pady = 5)
 
     def enter(event):
-        event.widget.configure(fg_color='yellow')
+        event.widget.configure(fg_color='black')
+        for widget in event.widget.winfo_children():
+            widget.configure(bg = 'black')
     def leave(event):
         event.widget.configure(fg_color='#343638')
+        for widget in event.widget.winfo_children():
+            widget.configure(bg = '#343638')
     def click(event, id):
         for widget in app.winfo_children():
             widget.destroy()
@@ -756,22 +760,27 @@ def mode():
     chatMode.bind('<Enter>', enter)
     chatMode.bind('<Leave>', leave)
     chatMode.canvas.bind("<Button-1>", lambda event, id = 0: click(event, id))
+    chatsLabel.bind("<Button-1>", lambda event, id = 0: click(event, id))
 
     friendsMode.bind('<Enter>', enter)
     friendsMode.bind('<Leave>', leave)
     friendsMode.canvas.bind("<Button-1>", lambda event, id = 1: click(event, id))
+    friendsLabel.bind("<Button-1>", lambda event, id = 1: click(event, id))
 
     settingsMode.bind('<Enter>', enter)
     settingsMode.bind('<Leave>', leave)
     settingsMode.canvas.bind("<Button-1>", lambda event, id = 2: click(event, id))
+    settingsLabel.bind("<Button-1>", lambda event, id = 2: click(event, id))
 
     rateMode.bind('<Enter>', enter)
     rateMode.bind('<Leave>', leave)
     rateMode.canvas.bind("<Button-1>", lambda event, id = 3: click(event, id))
+    rateLabel.bind("<Button-1>", lambda event, id = 3: click(event, id))
 
     logoutButton.bind('<Enter>', enter)
     logoutButton.bind('<Leave>', leave)
     logoutButton.canvas.bind("<Button-1>", lambda event, id = 4: click(event, id))
+    logoutLabel.bind("<Button-1>", lambda event, id = 4: click(event, id))
 
     chatMode.grid(column = 0, row = 0, sticky = 'nsew')
     friendsMode.grid(column = 1, row = 0, sticky = 'nsew')
@@ -792,5 +801,3 @@ def main():
     chat()
 
     app.mainloop()
-
-main()
