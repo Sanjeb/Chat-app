@@ -57,6 +57,7 @@ def get_dm_messages(dmID):
     messages = []
     for x in cursor:
         messages.append(x)
+    cursor.reset()
     return messages #Returns list in the format [(MessageID, MessageText, SenderUserID, DMID, SenderUsername), (MessageID, MessageText, SenderUserID, DMID, SenderUsername)]
 
 def get_latest_dm_messages(dmID, lastMessageID):
