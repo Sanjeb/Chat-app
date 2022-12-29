@@ -51,18 +51,28 @@ def login():
     win.columnconfigure((1, 2), weight = 1)
 
     #Text labels
-    labelWelcome = customtkinter.CTkLabel(master=win, text="Welcome back", text_font=('comic sans', 30))
-    labelSignIn = customtkinter.CTkLabel(master=win, text="Sign in to start using DISCARD", text_font=('comic sans', 20))
-    labelEmail = customtkinter.CTkLabel(master=win, text="E-mail:", text_font=('comic sans', 10), anchor='w', justify='left')
-    labelPassword = customtkinter.CTkLabel(master=win, text="Password:", text_font=('comic sans', 10), anchor='w', justify='left')
-    labelIncorrect = customtkinter.CTkLabel(master=win, text="", text_font=('comic sans', 10), text_color='red')
-    labelNew = customtkinter.CTkLabel(master=win, text = "New to discard? Create an account", text_font=('comic sans', 10))
+    labelWelcome = customtkinter.CTkLabel(master=win, 
+        text="Welcome back", text_font=('comic sans', 30))
+    labelSignIn = customtkinter.CTkLabel(master=win, 
+        text="Sign in to start using DISCARD", text_font=('comic sans', 20))
+    labelEmail = customtkinter.CTkLabel(master=win, 
+        text="E-mail:", text_font=('comic sans', 10), anchor='w', justify='left')
+    labelPassword = customtkinter.CTkLabel(master=win, 
+        text="Password:", text_font=('comic sans', 10), anchor='w', justify='left')
+    labelIncorrect = customtkinter.CTkLabel(master=win, 
+        text="", text_font=('comic sans', 10), text_color='red')
+    labelNew = customtkinter.CTkLabel(master=win, 
+        text = "New to discard? Create an account", text_font=('comic sans', 10))
     #Entry boxes
-    entryEmail = customtkinter.CTkEntry(master=win, placeholder_text="Enter your email", width=200)
-    entryPassword = customtkinter.CTkEntry(master=win, placeholder_text="Enter you password", width=200, show = '\u2022')
+    entryEmail = customtkinter.CTkEntry(master=win, 
+        placeholder_text="Enter your email", width=200)
+    entryPassword = customtkinter.CTkEntry(master=win, 
+        placeholder_text="Enter you password", width=200, show = '\u2022')
     #Buttons
-    buttonLogin = customtkinter.CTkButton(master=win, text='LOGIN', width=200, command=on_press)
-    buttonCreateAccount = customtkinter.CTkButton(master=win, text = 'Create a new account', width = 200, command = create_account)
+    buttonLogin = customtkinter.CTkButton(master=win, 
+        text='LOGIN', width=200, command=on_press)
+    buttonCreateAccount = customtkinter.CTkButton(master=win, 
+        text = 'Create a new account', width = 200, command = create_account)
 
     #Arranging all widgetes on screen
     labelWelcome.grid(row=1, column=1, sticky='w', pady = 0)
